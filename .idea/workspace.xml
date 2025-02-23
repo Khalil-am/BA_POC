@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19743eb5-abbb-4ae3-bd04-3ecbaf2aeda6" name="Changes" comment="+inital commit">
-      <change afterPath="$PROJECT_DIR$/BA_POC.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +75,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1740344280799</updated>
-      <workItem from="1740344282182" duration="5370000" />
+      <workItem from="1740344282182" duration="5594000" />
     </task>
     <task id="LOCAL-00001" summary="+inital commit">
       <option name="closed" value="true" />
@@ -117,7 +117,23 @@
       <option name="project" value="LOCAL" />
       <updated>1740349469911</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="+inital commit">
+      <option name="closed" value="true" />
+      <created>1740349818881</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1740349818881</updated>
+    </task>
+    <task id="LOCAL-00007" summary="+inital commit">
+      <option name="closed" value="true" />
+      <created>1740349890136</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1740349890136</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

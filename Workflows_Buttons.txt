@@ -1,0 +1,593 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "author": "Khalil Mushref",
+    "lastUpdated": "2025-01-07T12:00:00Z",
+    "description": "Comprehensive workflows and business rules for the HMG app, integrating VIDA billing, appointments, CS360 call center, and VIDA lab modules."
+  },
+  "workflows": [
+    {
+      "id": "workflow_1",
+      "name": "Appointment Booking and Management",
+      "description": "Workflow for booking, managing, and tracking appointments within the HMG app.",
+      "actors": [
+        "Patient",
+        "Business Analyst",
+        "Appointment Scheduler",
+        "Doctor"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Patient logs into the HMG app using National ID or Medical File Number.",
+          "notes": "Ensure authentication is secure and compliant with local regulations.",
+          "Field_type": "text box"
+        },
+        {
+          "stepNumber": 2,
+          "action": "Patient selects 'Book Appointment' and chooses hospital, clinic, and doctor.",
+          "notes": "Use VIDA Appointments module to fetch available slots.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 3,
+          "action": "Patient selects preferred appointment time and confirms booking.",
+          "notes": "Send confirmation via SMS and email.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 4,
+          "action": "Appointment details are synced with the doctor's schedule and patient's medical file.",
+          "notes": "Ensure real-time updates to avoid double bookings.",
+          "Field_type": ""
+        }
+      ],
+      "expectedOutcome": "Successfully booked appointment with confirmation sent to the patient.",
+      "dependencies": [
+        "VIDA Appointments Module",
+        "Patient Medical File",
+        "Doctor's Schedule"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "module",
+          "name": "VIDA Appointments Module",
+          "url": "https://vida.example.com/appointments"
+        }
+      ],
+      "businessRules": [
+        "Appointments can only be booked up to 30 days in advance.",
+        "Patients must confirm their identity using National ID or Medical File Number.",
+        "Cancellations must be made at least 24 hours before the appointment."
+      ]
+    },
+    {
+      "id": "workflow_2",
+      "name": "Billing and Payment Processing",
+      "description": "Workflow for generating and processing bills for services rendered.",
+      "actors": [
+        "Patient",
+        "Billing Department",
+        "Insurance Provider"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Service details are sent to the VIDA Billing module after appointment completion.",
+          "notes": "Ensure all services are accurately recorded.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 2,
+          "action": "VIDA Billing module generates an invoice based on services rendered.",
+          "notes": "Include insurance details if applicable.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 3,
+          "action": "Invoice is sent to the patient via the HMG app and email.",
+          "notes": "Provide multiple payment options.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 4,
+          "action": "Patient makes payment through the app or at the hospital.",
+          "notes": "Ensure payment gateway is secure and compliant.",
+          "Field_type": ""
+        }
+      ],
+      "expectedOutcome": "Accurate billing and successful payment processing.",
+      "dependencies": [
+        "VIDA Billing Module",
+        "Insurance Provider API",
+        "Payment Gateway"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "module",
+          "name": "VIDA Billing Module",
+          "url": "https://vida.example.com/billing"
+        }
+      ],
+      "businessRules": [
+        "Invoices must be generated within 24 hours of service completion.",
+        "Patients must be notified of any pending payments within 48 hours.",
+        "Insurance claims must be processed within 72 hours."
+      ]
+    },
+    {
+      "id": "workflow_3",
+      "name": "Call Center Support",
+      "description": "Workflow for handling patient inquiries and support through the call center.",
+      "actors": [
+        "Patient",
+        "Call Center Agent",
+        "Technical Support"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Patient calls the support number and is connected to a call center agent.",
+          "notes": "Use CS360 for call routing and tracking.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 2,
+          "action": "Call center agent logs the inquiry in CS360 and provides initial support.",
+          "notes": "Ensure all interactions are recorded for quality assurance.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 3,
+          "action": "If the issue is unresolved, escalate to technical support or relevant department.",
+          "notes": "Provide patient with a reference number for tracking.",
+          "Field_type": ""
+        }
+      ],
+      "expectedOutcome": "Patient inquiry is resolved or escalated appropriately.",
+      "dependencies": [
+        "CS360 Call Center Module",
+        "Technical Support Team"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "module",
+          "name": "CS360 Call Center Module",
+          "url": "https://cs360.example.com"
+        }
+      ],
+      "businessRules": [
+        "All calls must be logged in CS360 within 5 minutes of the call ending.",
+        "Escalations must be initiated within 15 minutes if the issue is unresolved.",
+        "Patients must receive a follow-up within 24 hours if their issue was escalated."
+      ]
+    },
+    {
+      "id": "workflow_4",
+      "name": "Lab Test Management",
+      "description": "Workflow for ordering, processing, and delivering lab test results.",
+      "actors": [
+        "Patient",
+        "Lab Technician",
+        "Doctor"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Doctor orders a lab test through the HMG app.",
+          "notes": "Ensure the order is sent to the VIDA Lab module.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 2,
+          "action": "Lab technician processes the test and uploads results to the VIDA Lab module.",
+          "notes": "Ensure results are accurate and timely.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 3,
+          "action": "Results are reviewed by the doctor and shared with the patient via the app.",
+          "notes": "Provide a summary and next steps if necessary.",
+          "Field_type": ""
+        }
+      ],
+      "expectedOutcome": "Accurate lab test results delivered to the patient and doctor.",
+      "dependencies": [
+        "VIDA Lab Module",
+        "Doctor's Schedule"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "module",
+          "name": "VIDA Lab Module",
+          "url": "https://vida.example.com/lab"
+        }
+      ],
+      "businessRules": [
+        "Lab tests must be processed within 48 hours of being ordered.",
+        "Results must be reviewed by a doctor before being shared with the patient.",
+        "Patients must be notified of their results within 24 hours of completion."
+      ]
+    },
+    {
+      "id": "workflow_5",
+      "name": "Emergency Check-In",
+      "description": "Workflow for patients to check-in online for emergency services.",
+      "actors": [
+        "Patient",
+        "Emergency Department",
+        "Nurse"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Patient selects 'Emergency Check-In' in the HMG app.",
+          "notes": "Ensure the option is easily accessible from the main menu.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 2,
+          "action": "Patient fills out necessary forms and shares insurance details.",
+          "notes": "Use NFC technology for quick data transfer if available.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 3,
+          "action": "Patient holds phone near the NFC sign to complete check-in.",
+          "notes": "Ensure clear instructions are provided for NFC usage.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 4,
+          "action": "Patient waits in the designated area until called by a nurse.",
+          "notes": "Provide real-time updates on wait times via the app.",
+          "Field_type": ""
+        }
+      ],
+      "expectedOutcome": "Patient is successfully checked-in and ready for emergency services.",
+      "dependencies": [
+        "NFC Technology",
+        "Emergency Department System"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "technology",
+          "name": "NFC Technology",
+          "url": "https://nfc.example.com"
+        }
+      ],
+      "businessRules": [
+        "Emergency check-in must be completed within 5 minutes of arrival.",
+        "Patients must be notified of their wait time within 10 minutes of check-in.",
+        "All forms must be filled out accurately before check-in is complete."
+      ]
+    },
+    {
+      "id": "workflow_6",
+      "name": "Prescription Management",
+      "description": "Workflow for managing and tracking patient prescriptions.",
+      "actors": [
+        "Patient",
+        "Doctor",
+        "Pharmacist"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Doctor prescribes medication through the HMG app.",
+          "notes": "Ensure the prescription is sent to the patient's medical file.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 2,
+          "action": "Patient receives notification of the new prescription.",
+          "notes": "Include details on how to fill the prescription.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 3,
+          "action": "Patient selects a pharmacy and submits the prescription.",
+          "notes": "Provide options for home delivery if available.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 4,
+          "action": "Pharmacist processes the prescription and notifies the patient.",
+          "notes": "Ensure the patient is informed of any delays.",
+          "Field_type": ""
+        }
+      ],
+      "expectedOutcome": "Patient receives prescribed medication in a timely manner.",
+      "dependencies": [
+        "Pharmacy System",
+        "Patient Medical File"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "system",
+          "name": "Pharmacy System",
+          "url": "https://pharmacy.example.com"
+        }
+      ],
+      "businessRules": [
+        "Prescriptions must be sent to the patient within 1 hour of being issued.",
+        "Patients must be notified of prescription status within 24 hours.",
+        "Pharmacies must confirm receipt of prescriptions within 2 hours."
+      ]
+    },
+    {
+      "id": "workflow_7",
+      "name": "Feedback and Complaints",
+      "description": "Workflow for patients to provide feedback or file complaints.",
+      "actors": [
+        "Patient",
+        "Customer Service",
+        "Quality Assurance"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Patient selects 'Feedback' or 'Complaint' in the HMG app.",
+          "notes": "Ensure the option is easily accessible from the main menu.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 2,
+          "action": "Patient fills out the feedback or complaint form.",
+          "notes": "Include options for attaching documents or screenshots.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 3,
+          "action": "Form is submitted to the customer service team for review.",
+          "notes": "Ensure all submissions are logged and tracked.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 4,
+          "action": "Customer service responds to the patient within the specified timeframe.",
+          "notes": "Provide updates on the status of the complaint if necessary.",
+          "Field_type": ""
+        }
+      ],
+      "expectedOutcome": "Patient feedback or complaint is acknowledged and addressed.",
+      "dependencies": [
+        "Customer Service System",
+        "Quality Assurance Team"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "system",
+          "name": "Customer Service System",
+          "url": "https://customerservice.example.com"
+        }
+      ],
+      "businessRules": [
+        "All feedback and complaints must be acknowledged within 24 hours.",
+        "Complaints must be resolved within 5 business days.",
+        "Patients must receive a follow-up survey after their issue is resolved."
+      ]
+    },
+    {
+      "id": "workflow_8",
+      "name": "COVID-19 Testing and Results",
+      "description": "Workflow for booking, conducting, and receiving COVID-19 test results.",
+      "actors": [
+        "Patient",
+        "Lab Technician",
+        "Doctor"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Patient selects 'COVID-19 Testing' in the HMG app.",
+          "notes": "Ensure the option is easily accessible from the main menu.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 2,
+          "action": "Patient answers a series of health-related questions.",
+          "notes": "Use the responses to determine the urgency of the test.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 3,
+          "action": "Patient books an appointment for the test at a selected location.",
+          "notes": "Provide real-time availability for test slots.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 4,
+          "action": "Lab technician conducts the test and uploads results to the VIDA Lab module.",
+          "notes": "Ensure results are processed within the promised timeframe.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 5,
+          "action": "Patient receives results via the HMG app and email.",
+          "notes": "Include instructions for next steps based on the results.",
+          "Field_type": ""
+        }
+      ],
+      "expectedOutcome": "Patient receives COVID-19 test results in a timely manner.",
+      "dependencies": [
+        "VIDA Lab Module",
+        "COVID-19 Testing Protocol"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "module",
+          "name": "VIDA Lab Module",
+          "url": "https://vida.example.com/lab"
+        }
+      ],
+      "businessRules": [
+        "COVID-19 test results must be delivered within 24 hours of testing.",
+        "Patients must be notified of their results via multiple channels.",
+        "Positive results must be reported to the relevant health authorities within 1 hour."
+      ]
+    },
+    {
+      "id": "workflow_9",
+      "name": "Home Health Care Services",
+      "description": "Workflow for ordering and managing home health care services.",
+      "actors": [
+        "Patient",
+        "Home Health Care Provider",
+        "Doctor"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Patient selects 'Home Health Care' in the HMG app.",
+          "notes": "Ensure the option is easily accessible from the main menu.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 2,
+          "action": "Patient selects the type of service needed (e.g., physiotherapy, nursing).",
+          "notes": "Provide detailed descriptions of each service.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 3,
+          "action": "Patient schedules the service and provides necessary details.",
+          "notes": "Include options for recurring services if applicable.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 4,
+          "action": "Home health care provider confirms the appointment and visits the patient.",
+          "notes": "Ensure the patient is notified of the provider's ETA.",
+          "Field_type": ""
+        }
+      ],
+      "expectedOutcome": "Patient receives the requested home health care services.",
+      "dependencies": [
+        "Home Health Care Provider System",
+        "Patient Medical File"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "system",
+          "name": "Home Health Care Provider System",
+          "url": "https://homehealthcare.example.com"
+        }
+      ],
+      "businessRules": [
+        "Home health care services must be scheduled within 24 hours of request.",
+        "Patients must be notified of any changes to their appointment within 1 hour.",
+        "Providers must confirm completion of services within 2 hours of the visit."
+      ]
+    },
+    {
+      "id": "workflow_10",
+      "name": "Medical File Management",
+      "description": "Workflow for managing and updating patient medical files.",
+      "actors": [
+        "Patient",
+        "Doctor",
+        "Medical Records Department"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Patient accesses their medical file through the HMG app.",
+          "notes": "Ensure the file is secure and only accessible to authorized users.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 2,
+          "action": "Patient updates personal information or adds new health data.",
+          "notes": "Include options for uploading documents or test results.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 3,
+          "action": "Doctor reviews and approves updates to the medical file.",
+          "notes": "Ensure all updates are logged for audit purposes.",
+          "Field_type": ""
+        },
+        {
+          "stepNumber": 4,
+          "action": "Medical records department archives the updated file.",
+          "notes": "Ensure the file is backed up and secure.",
+          "Field_type": ""
+        }
+      ],
+      "expectedOutcome": "Patient medical file is accurately updated and secure.",
+      "dependencies": [
+        "Medical Records System",
+        "Patient Authentication"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "system",
+          "name": "Medical Records System",
+          "url": "https://medicalrecords.example.com"
+        }
+      ],
+      "businessRules": [
+        "Medical files must be updated within 1 hour of receiving new data.",
+        "Patients must be notified of any changes to their medical file.",
+        "All updates must be reviewed and approved by a doctor within 24 hours."
+      ]
+    }
+  ],
+  "referenceData": {
+    "tools": [
+      {
+        "id": "vida_appointments",
+        "name": "VIDA Appointments Module",
+        "description": "Module for managing appointment bookings and schedules."
+      },
+      {
+        "id": "vida_billing",
+        "name": "VIDA Billing Module",
+        "description": "Module for generating and processing invoices and payments."
+      },
+      {
+        "id": "cs360",
+        "name": "CS360 Call Center Module",
+        "description": "Module for managing call center operations and patient inquiries."
+      },
+      {
+        "id": "vida_lab",
+        "name": "VIDA Lab Module",
+        "description": "Module for managing lab test orders and results."
+      },
+      {
+        "id": "nfc_technology",
+        "name": "NFC Technology",
+        "description": "Technology for quick data transfer during emergency check-in."
+      },
+      {
+        "id": "pharmacy_system",
+        "name": "Pharmacy System",
+        "description": "System for managing prescriptions and medication delivery."
+      },
+      {
+        "id": "customer_service_system",
+        "name": "Customer Service System",
+        "description": "System for managing patient feedback and complaints."
+      },
+      {
+        "id": "home_health_care_system",
+        "name": "Home Health Care System",
+        "description": "System for managing home health care services."
+      },
+      {
+        "id": "medical_records_system",
+        "name": "Medical Records System",
+        "description": "System for managing and updating patient medical files."
+      }
+    ],
+    "glossary": {
+      "HMG": "Health Management Group",
+      "VIDA": "HIS",
+      "CS360": "Customer Support 360",
+      "LLM": "Large Language Model",
+      "NFC": "Near Field Communication"
+    }
+  }
+}

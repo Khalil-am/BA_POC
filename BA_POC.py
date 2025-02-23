@@ -7,6 +7,7 @@ from io import BytesIO
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import letter
+import requests
 
 # Load environment variables
 load_dotenv()
@@ -14,8 +15,25 @@ load_dotenv()
 # Initialize OpenAI client
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# File path for JSON data
-FILE_PATH = r"C:\Users\am-kh\PycharmProjects\BAPOC\Workflows_Buttons.txt"
+# GitHub raw file path for JSON data
+GITHUB_RAW_URL = "https://raw.githubusercontent.com/Khalil-am/BA_POC/main/Workflows_Buttons.txt"
+
+def load_workflows(file_url):
+    """Load workflows from GitHub raw file URL"""
+    try:
+        response = requests.get(file_url)
+        response.raise_for_status()  # Raise error if request fails
+        data = json.loads(response.text)
+        if not data.get("workflows"):
+            raise ValueError("No workflows found in JSON structure")
+        return data
+    except Exception as e:
+        st.error(f"Workflow loading error: {str(e)}")
+        return {"workflows": []}
+
+# Load workflows from GitHub
+data = load_workflows(GITHUB_RAW_URL)
+workflows = data.get("workflows", [])
 
 # Corporate knowledge from CR documents
 CORPORATE_CONTEXT = """
@@ -28,18 +46,6 @@ CORPORATE_CONTEXT = """
 - Medical record unification initiative (CR#6691)
 - Compliance with Saudi healthcare regulations
 """
-
-def load_workflows(file_path):
-    """Load workflows with enhanced validation"""
-    try:
-        with open(file_path, "r", encoding="utf-8") as file:
-            data = json.load(file)
-            if not data.get("workflows"):
-                raise ValueError("No workflows found in JSON structure")
-            return data
-    except Exception as e:
-        st.error(f"Workflow loading error: {str(e)}")
-        return {"workflows": []}
 
 def create_professional_pdf(content):
     """Create formatted PDF using corporate template"""
@@ -72,10 +78,6 @@ def create_professional_pdf(content):
     doc.build(flowables)
     buffer.seek(0)
     return buffer
-
-# Load workflows
-data = load_workflows(FILE_PATH)
-workflows = data.get("workflows", [])
 
 # Streamlit UI
 st.title("🔗 CoRAG: Business Requirement Generator")
@@ -151,20 +153,10 @@ if st.button("🔄 Generate BRD"):
         except Exception as e:
             st.error(f"Generation failed: {str(e)}")
 
-# Reprompt Feature
+# Export features
 if st.session_state.generated_br:
-    st.subheader("🔄 Document Refinement")
-    modified_brd = st.text_area("Edit the generated BRD before regenerating:", st.session_state.generated_br, height=400)
-
-    if st.button("♻️ Update BRD"):
-        st.session_state.generated_br = modified_brd
-        st.success("BRD updated successfully!")
-
-    # Export to PDF
     pdf_buffer = create_professional_pdf(st.session_state.generated_br)
     st.download_button("📄 Download BRD (PDF)", pdf_buffer.getvalue(), file_name=f"BRD_{selected_workflow.replace(' ', '_')}.pdf", mime="application/pdf")
-
-    # Export to TXT
     st.download_button("📝 Download BRD (TXT)", st.session_state.generated_br.encode(), file_name=f"BRD_{selected_workflow.replace(' ', '_')}.txt")
 
 # Related CRs

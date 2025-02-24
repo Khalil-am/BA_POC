@@ -1,21 +1,24 @@
-import json
 import os
+import json
+import requests
 import streamlit as st
 import openai
-from dotenv import load_dotenv
 from io import BytesIO
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import letter
-import requests
 
-# Load environment variables
-load_dotenv()
+# ✅ Ensure Streamlit secrets are correctly loaded
+try:
+    OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+except KeyError:
+    st.error("❌ OpenAI API key is missing! Add it in Streamlit Secrets.")
+    st.stop()
 
-# Initialize OpenAI client
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# ✅ Initialize OpenAI client
+client = openai.OpenAI(api_key=OPENAI_API_KEY)
 
-# GitHub raw file path for JSON data
+# ✅ GitHub raw file path for JSON data
 GITHUB_RAW_URL = "https://raw.githubusercontent.com/Khalil-am/BA_POC/main/Workflows_Buttons.txt"
 
 def load_workflows(file_url):
@@ -28,14 +31,14 @@ def load_workflows(file_url):
             raise ValueError("No workflows found in JSON structure")
         return data
     except Exception as e:
-        st.error(f"Workflow loading error: {str(e)}")
+        st.error(f"🚨 Workflow loading error: {str(e)}")
         return {"workflows": []}
 
-# Load workflows from GitHub
+# ✅ Load workflows from GitHub
 data = load_workflows(GITHUB_RAW_URL)
 workflows = data.get("workflows", [])
 
-# Corporate knowledge from CR documents
+# ✅ Corporate knowledge from CR documents
 CORPORATE_CONTEXT = """
 **HMG System Context:**
 - Integrated VIDA modules (Appointments, Billing, Lab, Medical Records)
@@ -79,24 +82,28 @@ def create_professional_pdf(content):
     buffer.seek(0)
     return buffer
 
-# Streamlit UI
+# ✅ Streamlit UI
 st.title("🔗 CoRAG: Business Requirement Generator")
 st.subheader("AI-powered Documentation using Chain-of-Retrieval Augmented Generation")
 
-# Workflow selection
-selected_workflow = st.selectbox("Select a Workflow:", [wf['name'] for wf in workflows], help="Select a workflow from the HMG process library")
-
-if not workflows:
+# ✅ Workflow selection
+if workflows:
+    selected_workflow = st.selectbox(
+        "Select a Workflow:",
+        [wf['name'] for wf in workflows],
+        help="Select a workflow from the HMG process library"
+    )
+else:
     st.error("🚨 No workflows found! Check JSON file structure.")
     st.stop()
 
 workflow_details = next(wf for wf in workflows if wf["name"] == selected_workflow)
 
-# Display section
+# ✅ Display section
 st.write(f"### 📌 Workflow: {workflow_details['name']}")
 st.write(f"**Description:** {workflow_details['description']}")
 
-# Business Analyst Features
+# ✅ Business Analyst Features
 with st.expander("📋 Workflow Analysis", expanded=True):
     col1, col2, col3 = st.columns(3)
     col1.metric("Steps", len(workflow_details['steps']))
@@ -106,7 +113,7 @@ with st.expander("📋 Workflow Analysis", expanded=True):
     st.write("**Key Actors:** " + ", ".join(workflow_details['actors']))
     st.write("**Expected Outcome:** " + workflow_details['expectedOutcome'])
 
-# Context with CR Enhancements
+# ✅ Context with CR Enhancements
 context = f"""
 {CORPORATE_CONTEXT}
 
@@ -130,20 +137,23 @@ context = f"""
 4. Include potential CR cross-references
 """
 
-# Customization
+# ✅ Customization
 st.subheader("🔍 AI Customization")
 user_input = st.text_area("Modify or enhance the BRD requirements:", "Generate a structured Business Requirements Document", height=150)
 
 if "generated_br" not in st.session_state:
     st.session_state.generated_br = ""
 
-# Generate BRD
+# ✅ Generate BRD
 if st.button("🔄 Generate BRD"):
     with st.spinner("Generating business requirement document..."):
         try:
             response = client.chat.completions.create(
                 model="gpt-4",
-                messages=[{"role": "system", "content": "You are HMG's lead business analyst. Generate a professional BRD with:" + context}, {"role": "user", "content": user_input}],
+                messages=[
+                    {"role": "system", "content": "You are HMG's lead business analyst. Generate a professional BRD with:" + context},
+                    {"role": "user", "content": user_input}
+                ],
                 temperature=0.3
             )
             st.session_state.generated_br = response.choices[0].message.content
@@ -151,15 +161,15 @@ if st.button("🔄 Generate BRD"):
             st.markdown(f"```\n{st.session_state.generated_br}\n```")  # Properly formatted text box
 
         except Exception as e:
-            st.error(f"Generation failed: {str(e)}")
+            st.error(f"🚨 Generation failed: {str(e)}")
 
-# Export features
+# ✅ Export features
 if st.session_state.generated_br:
     pdf_buffer = create_professional_pdf(st.session_state.generated_br)
     st.download_button("📄 Download BRD (PDF)", pdf_buffer.getvalue(), file_name=f"BRD_{selected_workflow.replace(' ', '_')}.pdf", mime="application/pdf")
     st.download_button("📝 Download BRD (TXT)", st.session_state.generated_br.encode(), file_name=f"BRD_{selected_workflow.replace(' ', '_')}.txt")
 
-# Related CRs
+# ✅ Related CRs
 st.subheader("🔗 Related Change Requests")
 cr_db = {
     "Appointment": ["CR#6727", "CR#6853"],

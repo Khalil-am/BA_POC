@@ -50,6 +50,26 @@ CORPORATE_CONTEXT = """
 - Compliance with Saudi healthcare regulations
 """
 
+def react_reasoning(workflow_details):
+    """ReAct: Analyze workflow before generating BRD"""
+    analysis = []
+
+    # Check for missing steps
+    if not workflow_details['steps']:
+        analysis.append("⚠️ Warning: No steps are defined for this workflow.")
+
+    # Check for missing business rules
+    if not workflow_details['businessRules']:
+        analysis.append("⚠️ Warning: No business rules are specified.")
+
+    # Check for dependencies
+    if not workflow_details['dependencies']:
+        analysis.append("⚠️ Warning: No dependencies listed. Ensure all required integrations are included.")
+
+    # Generate reasoning text
+    reasoning_text = "\n".join(analysis) if analysis else "✅ Workflow is well-structured."
+    return reasoning_text
+
 def create_professional_pdf(content):
     """Create formatted PDF using corporate template"""
     buffer = BytesIO()
@@ -83,8 +103,8 @@ def create_professional_pdf(content):
     return buffer
 
 # ✅ Streamlit UI
-st.title("🔗 CoRAG: Business Requirement Generator")
-st.subheader("AI-powered Documentation using Chain-of-Retrieval Augmented Generation")
+st.title("🔗 CoRAG + ReAct: Business Requirement Generator")
+st.subheader("AI-powered Documentation with Reasoning & Augmented Generation")
 
 # ✅ Workflow selection
 if workflows:
@@ -103,15 +123,10 @@ workflow_details = next(wf for wf in workflows if wf["name"] == selected_workflo
 st.write(f"### 📌 Workflow: {workflow_details['name']}")
 st.write(f"**Description:** {workflow_details['description']}")
 
-# ✅ Business Analyst Features
-with st.expander("📋 Workflow Analysis", expanded=True):
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Steps", len(workflow_details['steps']))
-    col2.metric("Business Rules", len(workflow_details['businessRules']))
-    col3.metric("Dependencies", len(workflow_details['dependencies']))
-
-    st.write("**Key Actors:** " + ", ".join(workflow_details['actors']))
-    st.write("**Expected Outcome:** " + workflow_details['expectedOutcome'])
+# ✅ ReAct Layer: Analyzing workflow
+st.subheader("🧐 ReAct: Workflow Analysis & Reasoning")
+react_analysis = react_reasoning(workflow_details)
+st.info(react_analysis)
 
 # ✅ Context with CR Enhancements
 context = f"""

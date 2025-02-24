@@ -8,191 +8,262 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import letter
 
-# ✅ Load Streamlit Secrets
+
+# React-inspired state management
+class AppState:
+    def __init__(self):
+        self.selected_workflow = None
+        self.generated_brd = None
+        self.user_input = ""
+        self.show_analysis = True
+
+
+# ✅ Initialize OpenAI client
 try:
-    OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+    client = openai.OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 except KeyError:
     st.error("❌ OpenAI API key is missing! Add it in Streamlit Secrets.")
     st.stop()
 
-# ✅ Initialize OpenAI client
-client = openai.OpenAI(api_key=OPENAI_API_KEY)
-
-# ✅ GitHub raw file path for JSON data
+# ✅ GitHub raw file path
 GITHUB_RAW_URL = "https://raw.githubusercontent.com/Khalil-am/BA_POC/main/Workflows_Buttons.txt"
 
-def load_workflows(file_url):
-    """Load workflows from GitHub raw file URL"""
+
+def load_workflows():
+    """React-inspired data fetcher with error boundary"""
     try:
-        response = requests.get(file_url)
-        response.raise_for_status()  # Raise error if request fails
+        response = requests.get(GITHUB_RAW_URL)
+        response.raise_for_status()
         data = json.loads(response.text)
-        if not data.get("workflows"):
-            raise ValueError("No workflows found in JSON structure")
-        return data
+        return data.get("workflows", [])
     except Exception as e:
         st.error(f"🚨 Workflow loading error: {str(e)}")
-        return {"workflows": []}
+        return []
 
-# ✅ Load workflows from GitHub
-data = load_workflows(GITHUB_RAW_URL)
-workflows = data.get("workflows", [])
 
-# ✅ Corporate knowledge from CR documents
-CORPORATE_CONTEXT = """
-**HMG System Context:**
-- Integrated VIDA modules (Appointments, Billing, Lab, Medical Records)
-- CS360 Call Center integration
-- NFC emergency check-in requirements
-- Ongoing cloud migration (CR#6780)
-- Dental workflow digitalization (CR#6727)
-- Medical record unification initiative (CR#6691)
-- Compliance with Saudi healthcare regulations
-"""
+def WorkflowSelector(props):
+    """React-inspired component for workflow selection"""
+    workflows = props['workflows']
+    selected = props['selected']
+    on_select = props['on_select']
 
-def react_reasoning(workflow_details):
-    """ReAct: Analyze workflow before generating BRD"""
+    with st.container():
+        st.subheader("📋 Available Workflows")
+        selected_wf = st.selectbox(
+            "Select a Workflow:",
+            [wf['name'] for wf in workflows],
+            index=next((i for i, wf in enumerate(workflows) if wf['name'] == selected), 0),
+            key="workflow_selector",
+            on_change=lambda: on_select(st.session_state.workflow_selector)
+        )
+    return selected_wf
+
+
+def WorkflowAnalysis(props):
+    """React-style component for workflow insights"""
+    workflow = props['workflow']
+
+    with st.expander("🔍 Workflow Analysis", expanded=True):
+        cols = st.columns(3)
+        cols[0].metric("Steps", len(workflow.get('steps', [])))
+        cols[1].metric("Business Rules", len(workflow.get('businessRules', [])))
+        cols[2].metric("Dependencies", len(workflow.get('dependencies', [])))
+
+        st.write(f"**Actors:** {', '.join(workflow.get('actors', []))}")
+        st.write(f"**Expected Outcome:** {workflow.get('expectedOutcome', '')}")
+
+
+def ReActComponent(props):
+    """ReAct analysis component with state"""
+    workflow = props['workflow']
+
     analysis = []
+    if not workflow['steps']:
+        analysis.append("⚠️ Missing workflow steps")
+    if not workflow['businessRules']:
+        analysis.append("⚠️ No business rules defined")
+    if not workflow['dependencies']:
+        analysis.append("⚠️ Missing system dependencies")
 
-    # Check for missing steps
-    if not workflow_details['steps']:
-        analysis.append("⚠️ Warning: No steps are defined for this workflow.")
+    with st.container():
+        st.subheader("🧠 ReAct Analysis Engine")
+        if analysis:
+            for issue in analysis:
+                st.error(issue)
+        else:
+            st.success("✅ Workflow structure validated")
 
-    # Check for missing business rules
-    if not workflow_details['businessRules']:
-        analysis.append("⚠️ Warning: No business rules are specified.")
+        st.info("💡 Recommendation: Always verify integration points with VIDA modules")
 
-    # Check for dependencies
-    if not workflow_details['dependencies']:
-        analysis.append("⚠️ Warning: No dependencies listed. Ensure all required integrations are included.")
 
-    # Generate reasoning text
-    reasoning_text = "\n".join(analysis) if analysis else "✅ Workflow is well-structured."
-    return reasoning_text
+def BRDGenerator(props):
+    """React-style BRD generator with state management"""
+    state = props['state']
+
+    with st.form("brd_generator"):
+        st.subheader("📝 BRD Customization")
+        user_input = st.text_area(
+            "Enhance BRD requirements:",
+            value=state.user_input,
+            height=150,
+            key="brd_input"
+        )
+
+        if st.form_submit_button("🔄 Generate BRD"):
+            state.user_input = user_input
+            state.generated_brd = generate_brd(state)
+            st.rerun()
+
+
+def generate_brd(state):
+    """ReAct-powered BRD generation"""
+    workflow = next(wf for wf in workflows if wf["name"] == state.selected_workflow)
+
+    context = f"""
+    {CORPORATE_CONTEXT}
+    ## Workflow Details
+    {json.dumps(workflow, indent=2)}
+    ## User Customizations
+    {state.user_input}
+    """
+
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[{
+                "role": "system",
+                "content": "You are a senior business analyst. Generate professional BRD:"
+            }, {
+                "role": "user",
+                "content": context
+            }],
+            temperature=0.3
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        st.error(f"🚨 Generation failed: {str(e)}")
+        return None
+
+
+def BRDExporter(props):
+    """React-style export component"""
+    brd_content = props['content']
+
+    with st.container():
+        st.subheader("📤 Document Export")
+        pdf_buffer = create_professional_pdf(brd_content)
+
+        col1, col2 = st.columns(2)
+        col1.download_button(
+            "📄 Download PDF",
+            data=pdf_buffer.getvalue(),
+            file_name="business_requirements.pdf",
+            mime="application/pdf"
+        )
+        col2.download_button(
+            "📝 Download TXT",
+            data=brd_content.encode(),
+            file_name="business_requirements.txt"
+        )
+
 
 def create_professional_pdf(content):
-    """Create formatted PDF using corporate template"""
+    """PDF generator with React-inspired styling"""
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=letter)
     styles = getSampleStyleSheet()
 
-    # Define custom styles
-    title_style = ParagraphStyle('TitleStyle', parent=styles['Title'], fontSize=16, spaceAfter=12)
-    header_style = ParagraphStyle('HeaderStyle', parent=styles['Heading2'], fontSize=14, spaceAfter=8, textColor='blue')
-    body_style = ParagraphStyle('BodyStyle', parent=styles['BodyText'], fontSize=12, leading=15, spaceAfter=6)
+    flowables = [
+        Paragraph("HMG Business Requirements Document", styles['Title']),
+        Spacer(1, 24)
+    ]
 
-    flowables = []
-
-    # Add corporate header
-    flowables.append(Paragraph("HMG Business Requirements Document", title_style))
-    flowables.append(Spacer(1, 12))
-
-    # Format content
     sections = content.split("\n##")
     for section in sections:
         if section.strip():
-            lines = section.strip().split("\n")
-            if lines:
-                flowables.append(Paragraph(lines[0], header_style))  # Section Title
-                for line in lines[1:]:
-                    flowables.append(Paragraph(line, body_style))  # Section Content
-                    flowables.append(Spacer(1, 4))
+            title, *body = section.strip().split("\n")
+            flowables.append(Paragraph(title, styles['Heading2']))
+            for line in body:
+                flowables.append(Paragraph(line, styles['BodyText']))
+            flowables.append(Spacer(1, 12))
 
     doc.build(flowables)
     buffer.seek(0)
     return buffer
 
-# ✅ Streamlit UI
-st.title("🔗 CoRAG + ReAct: Business Requirement Generator")
-st.subheader("AI-powered Documentation with Reasoning & Augmented Generation")
 
-# ✅ Workflow selection
-if workflows:
-    selected_workflow = st.selectbox(
-        "Select a Workflow:",
-        [wf['name'] for wf in workflows],
-        help="Select a workflow from the HMG process library"
-    )
-else:
-    st.error("🚨 No workflows found! Check JSON file structure.")
-    st.stop()
+def RelatedCRs(props):
+    """React-inspired CR component"""
+    workflow_name = props['workflow_name']
+    cr_db = {
+        "Appointment": ["CR#6727", "CR#6853"],
+        "Billing": ["CR#6691", "CR#6727"],
+        "Lab": ["CR#3538"],
+        "Prescription": ["CR#6691"]
+    }
 
-workflow_details = next(wf for wf in workflows if wf["name"] == selected_workflow)
+    module = workflow_name.split()[0]
+    crs = cr_db.get(module, ["No related CRs"])
 
-# ✅ Display section
-st.write(f"### 📌 Workflow: {workflow_details['name']}")
-st.write(f"**Description:** {workflow_details['description']}")
+    with st.container():
+        st.subheader("🔗 Related Change Requests")
+        st.write(", ".join(crs))
 
-# ✅ Business Analyst Features
-with st.expander("📋 Workflow Analysis", expanded=True):
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Steps", len(workflow_details['steps']))
-    col2.metric("Business Rules", len(workflow_details['businessRules']))
-    col3.metric("Dependencies", len(workflow_details['dependencies']))
 
-    st.write("**Key Actors:** " + ", ".join(workflow_details['actors']))
-    st.write("**Expected Outcome:** " + workflow_details['expectedOutcome'])
+def main():
+    """Root component with state management"""
+    st.title("🔗 CoRAG + ReAct: Business Requirement Generator")
+    st.subheader("Enterprise Documentation System")
 
-# ✅ ReAct Layer: Analyzing workflow
-st.subheader("ReAct: Workflow Analysis & Reasoning")
-react_analysis = react_reasoning(workflow_details)
-st.info(react_analysis)
+    # Initialize state
+    if 'app_state' not in st.session_state:
+        st.session_state.app_state = AppState()
 
-# ✅ Context with CR Enhancements
-context = f"""
-{CORPORATE_CONTEXT}
+    state = st.session_state.app_state
+    workflows = load_workflows()
 
-## Workflow Specific Context
-**Name:** {workflow_details['name']}
-**Description:** {workflow_details['description']}
+    # Main layout
+    if not workflows:
+        st.error("🚨 No workflows available")
+        return
 
-## Steps
-{chr(10).join([f"- {s['action']}" for s in workflow_details['steps']])}
+    # Workflow selection
+    state.selected_workflow = WorkflowSelector({
+        'workflows': workflows,
+        'selected': state.selected_workflow,
+        'on_select': lambda wf: setattr(state, 'selected_workflow', wf)
+    })
 
-## Business Rules
-{chr(10).join([f"- {r}" for r in workflow_details['businessRules']])}
+    # Get current workflow
+    workflow = next(wf for wf in workflows if wf["name"] == state.selected_workflow)
 
-## Dependencies
-{chr(10).join([f"- {d}" for d in workflow_details['dependencies']])}
+    # Analysis components
+    WorkflowAnalysis({'workflow': workflow})
+    ReActComponent({'workflow': workflow})
 
-## BRD Requirements
-1. Workflow changes
-2. Simple impact analysis
-3. Identify integration points with VIDA modules
-4. Include potential CR cross-references
+    # BRD generation
+    BRDGenerator({'state': state})
+
+    # Display generated BRD
+    if state.generated_brd:
+        st.subheader("📜 Generated Business Requirement Document")
+        st.markdown(f"```\n{state.generated_brd}\n```")
+        BRDExporter({'content': state.generated_brd})
+
+    # Related CRs
+    RelatedCRs({'workflow_name': state.selected_workflow})
+
+
+# Corporate context (unchanged)
+CORPORATE_CONTEXT = """
+**HMG application System Context:
+- Integrated VIDA modules (Appointments, Billing, Lab, Medical Records)
+- CS360 Call Center integration
+- NFC emergency check-in requirements
+- Dental workflow digitalization (CR#6727)
+- Medical record unification initiative (CR#6691)
+- Compliance with Saudi healthcare regulations
 """
 
-# ✅ Generate BRD
-st.subheader("🔍 AI Customization")
-user_input = st.text_area("Modify or enhance the BRD requirements:", "Generate a structured Business Requirements Document", height=150)
-
-if st.button("🔄 Generate BRD"):
-    with st.spinner("Generating business requirement document..."):
-        try:
-            response = client.chat.completions.create(
-                model="gpt-4",
-                messages=[
-                    {"role": "system", "content": "You are HMG's lead business analyst. Generate a professional BRD with:" + context},
-                    {"role": "user", "content": user_input}
-                ],
-                temperature=0.3
-            )
-            st.subheader("📜 Generated Business Requirement Document:")
-            st.markdown(f"```\n{response.choices[0].message.content}\n```")
-
-        except Exception as e:
-            st.error(f"🚨 Generation failed: {str(e)}")
-
-# ✅ Export features
-pdf_buffer = create_professional_pdf(context)
-st.download_button("📄 Download BRD (PDF)", pdf_buffer.getvalue(), file_name="BRD.pdf", mime="application/pdf")
-
-# ✅ Related CRs
-st.subheader("🔗 Related Change Requests")
-cr_db = {
-    "Appointment": ["CR#6727", "CR#6853"],
-    "Billing": ["CR#6691", "CR#6727"],
-    "Lab": ["CR#3538"],
-    "Prescription": ["CR#6691"]
-}
-st.write(f"Relevant Change Requests: {', '.join(cr_db.get(selected_workflow.split()[0], ['No direct CR associations']))}")
+if __name__ == "__main__":
+    main()

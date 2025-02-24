@@ -18,19 +18,19 @@ class AppState:
         self.show_analysis = True
 
 
-# ✅ Initialize OpenAI client
+# Initialize OpenAI client
 try:
     client = openai.OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 except KeyError:
     st.error("❌ OpenAI API key is missing! Add it in Streamlit Secrets.")
     st.stop()
 
-# ✅ GitHub raw file path
+# GitHub raw file path
 GITHUB_RAW_URL = "https://raw.githubusercontent.com/Khalil-am/BA_POC/main/Workflows_Buttons.txt"
 
 
 def load_workflows():
-    """React-inspired data fetcher with error boundary"""
+    """Data fetcher with error handling"""
     try:
         response = requests.get(GITHUB_RAW_URL)
         response.raise_for_status()
@@ -42,7 +42,7 @@ def load_workflows():
 
 
 def WorkflowSelector(props):
-    """React-inspired component for workflow selection"""
+    """Workflow selection component"""
     workflows = props['workflows']
     selected = props['selected']
     on_select = props['on_select']
@@ -60,7 +60,7 @@ def WorkflowSelector(props):
 
 
 def WorkflowAnalysis(props):
-    """React-style component for workflow insights"""
+    """Workflow insights component"""
     workflow = props['workflow']
 
     with st.expander("🔍 Workflow Analysis", expanded=True):
@@ -74,7 +74,7 @@ def WorkflowAnalysis(props):
 
 
 def ReActComponent(props):
-    """ReAct analysis component with state"""
+    """Analysis component"""
     workflow = props['workflow']
 
     analysis = []
@@ -92,13 +92,13 @@ def ReActComponent(props):
                 st.error(issue)
         else:
             st.success("✅ Workflow structure validated")
-
         st.info("💡 Recommendation: Always verify integration points with VIDA modules")
 
 
 def BRDGenerator(props):
-    """React-style BRD generator with state management"""
+    """BRD generation component"""
     state = props['state']
+    workflows = props['workflows']
 
     with st.form("brd_generator"):
         st.subheader("📝 BRD Customization")
@@ -111,13 +111,17 @@ def BRDGenerator(props):
 
         if st.form_submit_button("🔄 Generate BRD"):
             state.user_input = user_input
-            state.generated_brd = generate_brd(state)
+            state.generated_brd = generate_brd(state, workflows)
             st.rerun()
 
 
-def generate_brd(state):
-    """ReAct-powered BRD generation"""
-    workflow = next(wf for wf in workflows if wf["name"] == state.selected_workflow)
+def generate_brd(state, workflows):
+    """BRD generation logic"""
+    try:
+        workflow = next(wf for wf in workflows if wf["name"] == state.selected_workflow)
+    except StopIteration:
+        st.error("Selected workflow not found")
+        return None
 
     context = f"""
     {CORPORATE_CONTEXT}
@@ -146,7 +150,7 @@ def generate_brd(state):
 
 
 def BRDExporter(props):
-    """React-style export component"""
+    """Export component"""
     brd_content = props['content']
 
     with st.container():
@@ -168,7 +172,7 @@ def BRDExporter(props):
 
 
 def create_professional_pdf(content):
-    """PDF generator with React-inspired styling"""
+    """PDF generator"""
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=letter)
     styles = getSampleStyleSheet()
@@ -193,7 +197,7 @@ def create_professional_pdf(content):
 
 
 def RelatedCRs(props):
-    """React-inspired CR component"""
+    """CR component"""
     workflow_name = props['workflow_name']
     cr_db = {
         "Appointment": ["CR#6727", "CR#6853"],
@@ -211,7 +215,7 @@ def RelatedCRs(props):
 
 
 def main():
-    """Root component with state management"""
+    """Main application"""
     st.title("🔗 CoRAG + ReAct: Business Requirement Generator")
     st.subheader("Enterprise Documentation System")
 
@@ -235,14 +239,18 @@ def main():
     })
 
     # Get current workflow
-    workflow = next(wf for wf in workflows if wf["name"] == state.selected_workflow)
+    try:
+        workflow = next(wf for wf in workflows if wf["name"] == state.selected_workflow)
+    except StopIteration:
+        st.error("Selected workflow not found in database")
+        return
 
     # Analysis components
     WorkflowAnalysis({'workflow': workflow})
     ReActComponent({'workflow': workflow})
 
     # BRD generation
-    BRDGenerator({'state': state})
+    BRDGenerator({'state': state, 'workflows': workflows})
 
     # Display generated BRD
     if state.generated_brd:
@@ -254,9 +262,9 @@ def main():
     RelatedCRs({'workflow_name': state.selected_workflow})
 
 
-# Corporate context (unchanged)
+# Corporate context
 CORPORATE_CONTEXT = """
-**HMG application System Context:
+**HMG application System Context:**
 - Integrated VIDA modules (Appointments, Billing, Lab, Medical Records)
 - CS360 Call Center integration
 - NFC emergency check-in requirements

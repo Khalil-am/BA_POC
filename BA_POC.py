@@ -147,7 +147,7 @@ context = f"""
 
 ## BRD Requirements
 1. Workflow changes
-2. Simple impacts analysis
+2. Simple impact analysis
 3. Identify integration points with VIDA modules
 4. Include potential CR cross-references
 """

@@ -134,7 +134,7 @@ with st.expander("📋 Workflow Analysis", expanded=True):
     st.write("**Expected Outcome:** " + workflow_details['expectedOutcome'])
 
 # ✅ ReAct Layer: Analyzing workflow
-st.subheader("🧐 ReAct: Workflow Analysis & Reasoning")
+st.subheader("ReAct: Workflow Analysis & Reasoning")
 react_analysis = react_reasoning(workflow_details)
 st.info(react_analysis)
 

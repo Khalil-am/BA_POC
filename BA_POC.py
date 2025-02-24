@@ -123,6 +123,16 @@ workflow_details = next(wf for wf in workflows if wf["name"] == selected_workflo
 st.write(f"### 📌 Workflow: {workflow_details['name']}")
 st.write(f"**Description:** {workflow_details['description']}")
 
+# ✅ Business Analyst Features
+with st.expander("📋 Workflow Analysis", expanded=True):
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Steps", len(workflow_details['steps']))
+    col2.metric("Business Rules", len(workflow_details['businessRules']))
+    col3.metric("Dependencies", len(workflow_details['dependencies']))
+
+    st.write("**Key Actors:** " + ", ".join(workflow_details['actors']))
+    st.write("**Expected Outcome:** " + workflow_details['expectedOutcome'])
+
 # ✅ ReAct Layer: Analyzing workflow
 st.subheader("🧐 ReAct: Workflow Analysis & Reasoning")
 react_analysis = react_reasoning(workflow_details)
@@ -152,14 +162,10 @@ context = f"""
 4. Include potential CR cross-references
 """
 
-# ✅ Customization
+# ✅ Generate BRD
 st.subheader("🔍 AI Customization")
 user_input = st.text_area("Modify or enhance the BRD requirements:", "Generate a structured Business Requirements Document", height=150)
 
-if "generated_br" not in st.session_state:
-    st.session_state.generated_br = ""
-
-# ✅ Generate BRD
 if st.button("🔄 Generate BRD"):
     with st.spinner("Generating business requirement document..."):
         try:
@@ -171,18 +177,15 @@ if st.button("🔄 Generate BRD"):
                 ],
                 temperature=0.3
             )
-            st.session_state.generated_br = response.choices[0].message.content
             st.subheader("📜 Generated Business Requirement Document:")
-            st.markdown(f"```\n{st.session_state.generated_br}\n```")  # Properly formatted text box
+            st.markdown(f"```\n{response.choices[0].message.content}\n```")
 
         except Exception as e:
             st.error(f"🚨 Generation failed: {str(e)}")
 
 # ✅ Export features
-if st.session_state.generated_br:
-    pdf_buffer = create_professional_pdf(st.session_state.generated_br)
-    st.download_button("📄 Download BRD (PDF)", pdf_buffer.getvalue(), file_name=f"BRD_{selected_workflow.replace(' ', '_')}.pdf", mime="application/pdf")
-    st.download_button("📝 Download BRD (TXT)", st.session_state.generated_br.encode(), file_name=f"BRD_{selected_workflow.replace(' ', '_')}.txt")
+pdf_buffer = create_professional_pdf(context)
+st.download_button("📄 Download BRD (PDF)", pdf_buffer.getvalue(), file_name="BRD.pdf", mime="application/pdf")
 
 # ✅ Related CRs
 st.subheader("🔗 Related Change Requests")
@@ -192,6 +195,4 @@ cr_db = {
     "Lab": ["CR#3538"],
     "Prescription": ["CR#6691"]
 }
-current_module = selected_workflow.split()[0]
-related_crs = cr_db.get(current_module, ["No direct CR associations"])
-st.write(f"Relevant Change Requests: {', '.join(related_crs)}")
+st.write(f"Relevant Change Requests: {', '.join(cr_db.get(selected_workflow.split()[0], ['No direct CR associations']))}")

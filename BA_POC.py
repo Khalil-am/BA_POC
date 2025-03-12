@@ -453,7 +453,7 @@ def RelatedCRs(props):
 def create_model_comparison_chart():
     """Create a bar chart comparing Mistral vs ChatGPT performance"""
     # Data for the comparison
-    models = ['Standard Documentation', 'Documentation with ReAct']
+    models = ['Standard Documentation', 'Documentation with CoRag & ReAct']
     mistral_scores = [118, 126]  # Representing 18% and 26% better performance
     chatgpt_scores = [100, 100]  # Baseline
 
@@ -513,7 +513,7 @@ def create_completeness_chart():
 
     ax.plot(angles, values[0], 'o-', linewidth=2, label='ChatGPT', color='#74aa9c')
     ax.plot(angles, values[1], 'o-', linewidth=2, label='Mistral Standard', color='#5662f6')
-    ax.plot(angles, values[2], 'o-', linewidth=2, label='Mistral with ReAct', color='#8c52ff')
+    ax.plot(angles, values[2], 'o-', linewidth=2, label='Mistral with CoRag & ReAct', color='#8c52ff')
     ax.fill(angles, values[0], alpha=0.1, color='#74aa9c')
     ax.fill(angles, values[1], alpha=0.1, color='#5662f6')
     ax.fill(angles, values[2], alpha=0.1, color='#8c52ff')
@@ -546,7 +546,7 @@ def create_accuracy_chart():
     fig, ax = plt.subplots(figsize=(12, 6))
     rects1 = ax.bar(x - width, chatgpt, width, label='ChatGPT', color='#74aa9c')
     rects2 = ax.bar(x, mistral, width, label='Mistral', color='#5662f6')
-    rects3 = ax.bar(x + width, mistral_react, width, label='Mistral with ReAct', color='#8c52ff')
+    rects3 = ax.bar(x + width, mistral_react, width, label='Mistral with CoRag & ReAct', color='#8c52ff')
 
     ax.set_ylabel('Accuracy Score (%)', fontsize=14)
     ax.set_title('Factual Accuracy in Documentation', fontsize=16)
@@ -574,7 +574,7 @@ def create_consistency_chart():
 
     ax.plot(workflows, chatgpt, 'o-', linewidth=2, label='ChatGPT', color='#74aa9c')
     ax.plot(workflows, mistral, 'o-', linewidth=2, label='Mistral', color='#5662f6')
-    ax.plot(workflows, mistral_react, 'o-', linewidth=2, label='Mistral with ReAct', color='#8c52ff')
+    ax.plot(workflows, mistral_react, 'o-', linewidth=2, label='Mistral with CoRag & ReAct', color='#8c52ff')
 
     ax.set_title('Documentation Consistency Across Workflows', fontsize=16)
     ax.set_ylabel('Consistency Score (%)', fontsize=14)
@@ -600,7 +600,7 @@ def create_clarity_chart():
     fig, ax = plt.subplots(figsize=(12, 6))
     rects1 = ax.bar(x - width, chatgpt, width, label='ChatGPT', color='#74aa9c')
     rects2 = ax.bar(x, mistral, width, label='Mistral', color='#5662f6')
-    rects3 = ax.bar(x + width, mistral_react, width, label='Mistral with ReAct', color='#8c52ff')
+    rects3 = ax.bar(x + width, mistral_react, width, label='Mistral with CoRag & ReAct', color='#8c52ff')
 
     ax.set_ylabel('Clarity Score (%)', fontsize=14)
     ax.set_title('Documentation Clarity Metrics', fontsize=16)
@@ -637,7 +637,7 @@ def create_time_savings_chart():
 
     ax.barh(y_pos - width, chatgpt, width, label='ChatGPT', color='#74aa9c')
     ax.barh(y_pos, mistral, width, label='Mistral', color='#5662f6')
-    ax.barh(y_pos + width, mistral_react, width, label='Mistral with ReAct', color='#8c52ff')
+    ax.barh(y_pos + width, mistral_react, width, label='Mistral with CoRag & ReAct', color='#8c52ff')
 
     ax.set_yticks(y_pos)
     ax.set_yticklabels(metrics, fontsize=12)
@@ -668,7 +668,7 @@ def create_satisfaction_chart():
     fig, ax = plt.subplots(figsize=(12, 6))
     rects1 = ax.bar(x - width, chatgpt, width, label='ChatGPT', color='#74aa9c')
     rects2 = ax.bar(x, mistral, width, label='Mistral', color='#5662f6')
-    rects3 = ax.bar(x + width, mistral_react, width, label='Mistral with ReAct', color='#8c52ff')
+    rects3 = ax.bar(x + width, mistral_react, width, label='Mistral with CoRag & ReAct', color='#8c52ff')
 
     ax.set_ylabel('Satisfaction Rating (out of 5)', fontsize=14)
     ax.set_title('User Satisfaction by Team', fontsize=16)
@@ -693,9 +693,9 @@ def performance_evaluation_tab():
     Our comprehensive evaluation shows that Mistral significantly outperforms ChatGPT in business requirements documentation tasks:
 
     - **Standard Documentation**: Mistral produces 18% better quality documentation compared to ChatGPT
-    - **Documentation with ReAct**: When enhanced with the ReAct analysis engine, Mistral outperforms ChatGPT by 26%
+    - **Documentation with CoRag & ReAct**: When enhanced with the ReAct analysis engine, Mistral outperforms ChatGPT by 26%
 
-    The following metrics illustrate how Mistral with ReAct provides superior business documentation across multiple dimensions.
+    The following metrics illustrate how Mistral with CoRag & ReAct provides superior business documentation across multiple dimensions.
     """)
 
     # Main performance comparison chart
@@ -724,7 +724,7 @@ def performance_evaluation_tab():
     # Consistency line chart
     st.subheader("Documentation Consistency")
     st.write("""
-    Mistral with ReAct maintains higher consistency across different types of workflows,
+    Mistral with CoRag & ReAct maintains higher consistency across different types of workflows,
     ensuring standardized documentation regardless of complexity.
     """)
     consistency_fig = create_consistency_chart()
@@ -742,7 +742,7 @@ def performance_evaluation_tab():
     # Time savings chart
     st.subheader("Time Savings")
     st.write("""
-    Using Mistral with ReAct significantly reduces the time required for documentation,
+    Using Mistral with CoRag & ReAct significantly reduces the time required for documentation,
     with particularly strong performance in documentation creation and revision cycles.
     """)
     time_fig = create_time_savings_chart()
@@ -766,11 +766,11 @@ def performance_evaluation_tab():
 
     1. **Documentation Quality**: Mistral produces more complete, accurate, consistent, and clear documentation
     2. **Efficiency Gains**: Teams report time savings of up to 82% compared to manual documentation processes
-    3. **ReAct Enhancement**: The ReAct analysis engine further improves documentation quality by identifying missing elements
+    3. **CoRag & ReAct Enhancement**: The ReAct analysis engine further improves documentation quality by identifying missing elements
     4. **User CR satisfaction**: All CR groups report higher satisfaction ratings with Mistral-generated documentation
     5. **Implementation Impact**: Better documentation leads to fewer defects and more successful implementations
 
-    These findings validate the selection of Mistral with ReAct as the optimal solution for enterprise documentation needs.
+    These findings validate the selection of Mistral with CoRag & ReAct as the optimal solution for enterprise documentation needs.
     """)
 
 
@@ -780,7 +780,7 @@ def main():
     st.subheader("Enterprise Documentation System")
 
     # Add a tab selector for application modes
-    tab1, tab2, tab3 = st.tabs(["Standard Mode", "With ReAct", "Performance Evaluation"])
+    tab1, tab2, tab3 = st.tabs(["Standard Mode", "With CoRag", "Performance Evaluation"])
 
     # Initialize state
     if 'app_state' not in st.session_state:
@@ -850,7 +850,7 @@ def main():
 
     # Enhanced Mode Tab
     with tab2:
-        st.header("Enhanced BRD Generator (with ReAct)")
+        st.header("Enhanced BRD Generator (with CoRag)")
 
         # Main layout
         if not workflows:
@@ -884,7 +884,7 @@ def main():
 
                 # Enhanced BRD generation
                 with st.form("enhanced_brd_generator"):
-                    st.subheader("📝 BRD Customization with ReAct")
+                    st.subheader("📝 BRD Customization with CoRag & ReAct")
                     user_input = st.text_area(
                         "Enhance BRD requirements:",
                         value=state.user_input,
@@ -894,13 +894,13 @@ def main():
 
                     if st.form_submit_button("🔄 Generate Enhanced BRD"):
                         state.user_input = user_input
-                        with st.spinner("Generating enhanced BRD with ReAct..."):
+                        with st.spinner("Generating enhanced BRD with CoRag & ReAct..."):
                             state.generated_brd = generate_brd(state, workflows, state.selected_workflow_enhanced)
                         st.rerun()
 
                 # Display generated BRD
                 if state.generated_brd:
-                    st.subheader("📜 Generated Enhanced BRD (with ReAct)")
+                    st.subheader("📜 Generated Enhanced BRD (with CoRag & ReAct)")
                     st.markdown(f"```\n{state.generated_brd}\n```")
                     BRDExporter({
                         'content': state.generated_brd,

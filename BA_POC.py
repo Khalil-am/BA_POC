@@ -776,7 +776,7 @@ def performance_evaluation_tab():
 
 def main():
     """Main application"""
-    st.title("🔗 ReAct: Business Requirement Generator")
+    st.title("🔗Mistral Finetuned: Advanced Business Requirements Generator")
     st.subheader("Enterprise Documentation System")
 
     # Add a tab selector for application modes

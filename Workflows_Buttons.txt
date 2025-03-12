@@ -17,62 +17,62 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User in the home screen navigates to Book Appointment and clicks on it",
           "notes": "User selects from HMG or HMC.",
           "Field_type": "Dropdown"
         },
         {
-          "stepNumber": 2.1,
+          "stepNumber": "2.1",
           "action": "User selects the hospital",
           "notes": "User selects from HMG or HMC.",
           "Field_type": "Dropdown"
         },
         {
-          "stepNumber": 2.2,
+          "stepNumber": "2.2",
           "action": "User navigates to the clinic tab and selects a clinic",
           "notes": "User selects from a collection of clinics.",
           "Field_type": "Dropdown"
         },
         {
-          "stepNumber": 2.3,
+          "stepNumber": "2.3",
           "action": "User navigates to Doctor Name and writes down the name of the doctor then clicks on search",
           "notes": "It will show the doctor name and info if they are available.",
           "Field_type": "Textbox"
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "User then selects the clinic.",
           "notes": "It will show all the clinics that are available at that certain HMG or HMC.",
           "Field_type": "Dropdown"
         },
         {
-          "stepNumber": 4,
+          "stepNumber": "4",
           "action": "User selects their Chief Complaint.",
           "notes": "It will be whatever the user is complaining about to book the appointment."
         },
         {
-          "stepNumber": 5,
+          "stepNumber": "5",
           "action": "User selects from available doctors.",
           "notes": "Under the selected branch, the user will see the available doctors."
         },
         {
-          "stepNumber": 6,
+          "stepNumber": "6",
           "action": "User then selects schedule.",
           "notes": "The user selects a date that fits both the user and the doctor."
         },
         {
-          "stepNumber": 7,
+          "stepNumber": "7",
           "action": "User selects the appropriate date.",
           "notes": "The dates are based on what's available in the doctor's schedule."
         },
         {
-          "stepNumber": 7.1,
+          "stepNumber": "7.1",
           "action": "If the user is logged in, it will schedule an appointment.",
           "notes": "A pop-up will appear to confirm the schedule."
         },
         {
-          "stepNumber": 7.2,
+          "stepNumber": "7.2",
           "action": "If the user isn't logged in, they will need to login first then schedule.",
           "notes": "A pop-up will appear to let the user login."
         }
@@ -107,53 +107,53 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "After confirming the schedule, user can choose to set a reminder or not.",
           "notes": "The user will set the reminder in their calendar.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 1.1,
+          "stepNumber": "1.1",
           "action": "In case user chooses no, it will take them to the payment page.",
           "notes": "User will have multiple options of paying now or later, and updating the insurance.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 1.1.1,
+          "stepNumber": "1.1.1",
           "action": "In case user chooses pay now, they will go to another page with payment methods.",
           "notes": "User can choose from multiple payment methods.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 1.1.1.1,
+          "stepNumber": "1.1.1.1",
           "action": "Confirm the payment method.",
           "notes": "Money will be taken from the user's account and confirming the schedule.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 1.1.2,
+          "stepNumber": "1.1.2",
           "action": "In case user chooses pay later, they will be taken back to home screen.",
           "notes": "A notification on My Appointments will appear confirming the schedule.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 1.2,
+          "stepNumber": "1.2",
           "action": "In case user chooses yes, it will take the user to the calendar app.",
           "notes": "It will add the schedule time to the app.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "VIDA Billing module generates an invoice based on services rendered.",
           "notes": "Include insurance details if applicable."
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "Invoice is sent to the patient via the HMG app and email.",
           "notes": "Provide multiple payment options."
         },
         {
-          "stepNumber": 4,
+          "stepNumber": "4",
           "action": "User makes payment through the app or at the hospital.",
           "notes": "Ensure payment gateway is secure and compliant."
         }
@@ -188,17 +188,17 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "Patient calls the support number and is connected to a call center agent.",
           "notes": "Use CS360 for call routing and tracking."
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "Call center agent logs the inquiry in CS360 and provides initial support.",
           "notes": "Ensure all interactions are recorded for quality assurance."
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "If the issue is unresolved, escalate to technical support or relevant department.",
           "notes": "Provide patient with a reference number for tracking."
         }
@@ -232,17 +232,17 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "Doctor orders a lab test through the HMG app.",
           "notes": "Ensure the order is sent to the VIDA Lab module."
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "Lab technician processes the test and uploads results to the VIDA Lab module.",
           "notes": "Ensure results are accurate and timely."
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "Results are reviewed by the doctor and shared with the patient via the app.",
           "notes": "Provide a summary and next steps if necessary."
         }
@@ -276,25 +276,25 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User selects 'Emergency Check-In' in the HMG app then selects book appointment.",
           "notes": "Ensure the option is easily accessible from the main menu.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User fills out necessary forms and clicks book appointment.",
           "notes": "Hospital name and clinic name.",
           "Field_type": "Dropdown and Button"
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "User visit details with pay now button.",
           "notes": "User information, ER visit details and payment details are shown.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 4,
+          "stepNumber": "4",
           "action": "User clicks pay now then confirm.",
           "notes": "Different payment methods are shown."
         }
@@ -328,22 +328,22 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "Doctor prescribes medication through the HMG app.",
           "notes": "Ensure the prescription is sent to the patient's medical file."
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User receives notification of the new prescription.",
           "notes": "Include details on how to fill the prescription."
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "User selects a pharmacy and submits the prescription.",
           "notes": "Provide options for home delivery if available."
         },
         {
-          "stepNumber": 4,
+          "stepNumber": "4",
           "action": "Pharmacist processes the prescription and notifies the User.",
           "notes": "Ensure the patient is informed of any delays."
         }
@@ -377,27 +377,27 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User selects 'Connect with us' in the HMG app.",
           "notes": "Ensure the option is easily accessible from the main menu."
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User selects 'Feedback'.",
           "notes": "Ensure that the user can see it very easily."
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "User fills out the feedback or complaint form.",
           "notes": "Include options for attaching documents or screenshots."
         },
         {
-          "stepNumber": 4,
+          "stepNumber": "4",
           "action": "Form is submitted to the customer service team for review.",
           "notes": "Ensure all submissions are logged and tracked."
         },
         {
-          "stepNumber": 5,
+          "stepNumber": "5",
           "action": "Customer service responds to the patient within the specified timeframe.",
           "notes": "Provide updates on the status of the complaint if necessary."
         }
@@ -431,27 +431,27 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User selects 'COVID-19 Testing' in the HMG app.",
           "notes": "Ensure the option is easily accessible from the main menu."
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User answers a series of health-related questions.",
           "notes": "Use the responses to determine the urgency of the test."
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "User books an appointment for the test at a selected location.",
           "notes": "Provide real-time availability for test slots."
         },
         {
-          "stepNumber": 4,
+          "stepNumber": "4",
           "action": "Lab technician conducts the test and uploads results to the VIDA Lab module.",
           "notes": "Ensure results are processed within the promised timeframe."
         },
         {
-          "stepNumber": 5,
+          "stepNumber": "5",
           "action": "User receives results via the HMG app and email.",
           "notes": "Include instructions for next steps based on the results."
         }
@@ -485,22 +485,22 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User selects 'Home Health Care' in the HMG app.",
           "notes": "Ensure the option is easily accessible from the main menu."
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User selects the type of service needed (e.g., physiotherapy, nursing).",
           "notes": "Provide detailed descriptions of each service."
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "User schedules the service and provides necessary details.",
           "notes": "Include options for recurring services if applicable."
         },
         {
-          "stepNumber": 4,
+          "stepNumber": "4",
           "action": "Home health care provider confirms the appointment and visits the User.",
           "notes": "Ensure the patient is notified of the provider's ETA."
         }
@@ -534,161 +534,161 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User accesses their medical file through the HMG app.",
           "notes": "Ensure the file is secure and only accessible to authorized users."
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User updates personal information or adds new health data.",
           "notes": "Include options for uploading documents or test results."
         },
         {
-          "stepNumber": 2.1,
+          "stepNumber": "2.1",
           "action": "User can access scheduled appointments by clicking 'My Appointments'.",
           "notes": "Include a number showing scheduled appointments."
         },
         {
-          "stepNumber": 2.2,
+          "stepNumber": "2.2",
           "action": "User can access previous results through 'Lab Results' and 'Radiology Results'.",
           "notes": "Include all the results with their related information."
         },
         {
-          "stepNumber": 2.3,
+          "stepNumber": "2.3",
           "action": "User can access medicines info through 'Medicines Prescriptions' and 'Active Medications'.",
           "notes": "Include order log and the hospital/clinic that assigned it."
         },
         {
-          "stepNumber": 2.4,
+          "stepNumber": "2.4",
           "action": "User clicks 'Vital Signs Reports'.",
           "notes": "Include all previous results and current signs reports."
         },
         {
-          "stepNumber": 2.5,
+          "stepNumber": "2.5",
           "action": "User clicks 'My Doctor List'.",
           "notes": "Shows the current doctor assigned to the user."
         },
         {
-          "stepNumber": 2.6,
+          "stepNumber": "2.6",
           "action": "User clicks 'My Invoice List'.",
           "notes": "Include invoice about all scheduled appointments."
         },
         {
-          "stepNumber": 2.7,
+          "stepNumber": "2.7",
           "action": "User clicks 'Ancillary Orders List'.",
           "notes": "Include all ancillary orders and their status."
         },
         {
-          "stepNumber": 2.8,
+          "stepNumber": "2.8",
           "action": "User clicks 'We Care Service'.",
           "notes": "Provides access to additional care services."
         },
         {
-          "stepNumber": 2.9,
+          "stepNumber": "2.9",
           "action": "User can access eye tests from 'Eye Measurement'.",
           "notes": "Include all records for previous and current eye tests."
         },
         {
-          "stepNumber": 2.10,
+          "stepNumber": "2.10",
           "action": "User can access insurance info from 'Insurance Card', 'Update Insurance' and 'Insurance Approvals'.",
           "notes": "Include insurance details and approval status."
         },
         {
-          "stepNumber": 2.11,
+          "stepNumber": "2.11",
           "action": "User clicks 'Allergies List'.",
           "notes": "Include recorded allergies for the user."
         },
         {
-          "stepNumber": 2.12,
+          "stepNumber": "2.12",
           "action": "User clicks 'My Vaccines List'.",
           "notes": "Shows recorded vaccines taken by the user."
         },
         {
-          "stepNumber": 2.13,
+          "stepNumber": "2.13",
           "action": "User clicks 'Medical Report'.",
           "notes": "Include 'Requested', 'Ready' and 'Cancelled' medical reports and user can request a medical report."
         },
         {
-          "stepNumber": 2.14,
+          "stepNumber": "2.14",
           "action": "User clicks 'Monthly Reports'.",
           "notes": "Shows medical reports from every month."
         },
         {
-          "stepNumber": 2.15,
+          "stepNumber": "2.15",
           "action": "User clicks 'Sick Leaves'.",
           "notes": "Shows the dates the user took days off."
         },
         {
-          "stepNumber": 2.16,
+          "stepNumber": "2.16",
           "action": "User click 'My Balance Credit'.",
           "notes": "Shows deposited money in certain hospital wallets with a total balance and a 'Recharge Wallet' button.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.17,
+          "stepNumber": "2.17",
           "action": "User click on 'My Trackers Service'.",
           "notes": "Include 'Blood Sugar', 'Blood Pressure' and 'Weight' buttons.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.17.1,
+          "stepNumber": "2.17.1",
           "action": "User clicks 'Blood Sugar'.",
           "notes": "Shows tracked blood sugar levels that can be added by the user with 'Weekly', 'Monthly' and 'Yearly' tabs for easier tracking."
         },
         {
-          "stepNumber": 2.17.2,
+          "stepNumber": "2.17.2",
           "action": "User clicks 'Blood Pressure'.",
           "notes": "Shows tracked blood pressure that can be added by the user with 'Weekly', 'Monthly' and 'Yearly' tabs for easier tracking."
         },
         {
-          "stepNumber": 2.17.3,
+          "stepNumber": "2.17.3",
           "action": "User clicks 'Weight'.",
           "notes": "Shows tracked Weight that can be added by the user with 'Weekly', 'Monthly' and 'Yearly' tabs for easier tracking.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.18,
+          "stepNumber": "2.18",
           "action": "User click on 'Pairing Smart Watches'.",
           "notes": "Include supported smart watches with detailed instructions on how to pair it.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.18.1,
+          "stepNumber": "2.18.1",
           "action": "User click continue to sync health data from the watch to the app.",
           "notes": "Include 'Heart Rate', 'Steps' and 'Distance'.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.18.2,
+          "stepNumber": "2.18.2",
           "action": "After syncing the data, user can check each of 'Heart Rate', 'Steps' and 'Distance'.",
           "notes": "Include options to manually add information with a 'Weekly', 'Monthly' and 'Yearly' graph tab to each one.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.19,
+          "stepNumber": "2.19",
           "action": "User click on 'Ask Your Doctor'.",
           "notes": "Include two tabs 'Ask Doctor' and 'Doctor Responses', only available for doctors visited in the past 15 days.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.20,
+          "stepNumber": "2.20",
           "action": "User click on 'Internet Pairing'.",
           "notes": "Pop up will appear allowing the app to connect.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.21,
+          "stepNumber": "2.21",
           "action": "User click on 'Chatbot'.",
           "notes": "A bot that is trained for medical quick responses.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "Doctor reviews and approves updates to the medical file.",
           "notes": "Ensure all updates are logged for audit purposes."
         },
         {
-          "stepNumber": 4,
+          "stepNumber": "4",
           "action": "Medical records department archives the updated file.",
           "notes": "Ensure the file is backed up and secure."
         }
@@ -722,13 +722,13 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User Clicks on 'Online Pharmacy'.",
           "notes": "After clicking the button it takes the user to a link to download the App 'Al Habib Pharmacy'.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User downloads the App.",
           "notes": "The user will be able to order the prescribed medicine using the App."
         }
@@ -759,47 +759,47 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User Clicks on 'Live Care Online Consulting'.",
           "notes": "Included buttons 'Get consultation immediately', 'Schedule video call' and 'Pharma LiveCare'.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.1,
+          "stepNumber": "2.1",
           "action": "User Clicks on 'Get consultation immediately'.",
           "notes": "Include Consultation based on the specialty the User needs and 'Logs' tab for past consultations."
         },
         {
-          "stepNumber": 2.1.1,
+          "stepNumber": "2.1.1",
           "action": "User chooses the specialty they need.",
-          "notes": "Included buttons 'Video Call', 'Audio call' and 'Phone Call',
+          "notes": "Included buttons 'Video Call', 'Audio call' and 'Phone Call'",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.1.2,
+          "stepNumber": "2.1.2",
           "action": "User chooses any of the options.",
           "notes": "User will be taken to a payment Tab, Include Consultation Fee and 'Cancel' and 'Next' buttons.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.2,
+          "stepNumber": "2.2",
           "action": "User Clicks on 'Schedule video call'.",
           "notes": "Include Consultation based on the specialty the User needs and 'Logs' tab for past consultations."
         },
         {
-          "stepNumber": 2.2.1,
+          "stepNumber": "2.2.1",
           "action": "User chooses the specialty they need.",
           "notes": "Include Dropdowns for HMCs the service covers.",
           "Field_type": "dropdown"
         },
         {
-          "stepNumber": 2.2.2,
+          "stepNumber": "2.2.2",
           "action": "User chooses the doctor from HMCs.",
           "notes": "Include Information about the selected Doctor with a schedule button and 'Available Appointments' tab.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.3,
+          "stepNumber": "2.3",
           "action": "User clicks on 'Pharma LiveCare'.",
           "notes": "Include instructions on how to use it with a 'Scan QR Code' button.",
           "Field_type": "Button"
@@ -833,13 +833,13 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User Clicks on 'Hospital Navigation'.",
           "notes": "Included Dropdown for HMCs and HMGs the service covers.",
           "Field_type": "dropdown and Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User selects the HMC or HMG they want.",
           "notes": "Included 'Confirms' button then it shows a map with a route from the User's location.",
           "Field_type": "Button"
@@ -875,19 +875,19 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User clicks on 'Checkup Comprehensive'.",
           "notes": "Included checkup options 'Executive medical examination', 'Comprehensive medical examination', 'Preventive medical examination' and 'Pre marriage examination' and 'Order Log' tab.",
           "Field_type": "Checkbox"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User chooses one of the options above.",
           "notes": "Include dropdown of HMGs and HMCs the service covers with a 'confirm' button.",
           "Field_type": "Dropdown and Button"
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "User confirms the schedule.",
           "notes": "Pop up appears confirming the schedule with a 'Request Id'."
         }
@@ -919,37 +919,37 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User clicks on 'View All Services'.",
           "notes": "Include all HMG services.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User clicks on 'My Family Files'.",
           "notes": "Include 'My Family' tab that shows registered members and 'Request' tab that shows dropdowns 'User want to view your medical file', 'Sent requests' and 'User can view your medical file' and 'Add family member' button for both tabs.",
           "Field_type": "Button and Dropdown"
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "User clicks on 'Add family member'.",
           "notes": "Include two buttons 'National ID Number' and 'Medical File Number' the user can choose from.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 3.1,
+          "stepNumber": "3.1",
           "action": "User clicks on 'National ID Number'.",
           "notes": "Include dropdown 'Country', two textboxes 'Phone Number' and 'National ID Number' and 'Add' button.",
           "Field_type": "Dropdown, TextBox and Button"
         },
         {
-          "stepNumber": 3.2,
+          "stepNumber": "3.2",
           "action": "User clicks on 'Medical File Number'.",
           "notes": "Include dropdown 'Country', two textboxes 'Phone Number' and 'Medical File Number' and 'Add' button.",
           "Field_type": "Dropdown, TextBox and Button"
         },
         {
-          "stepNumber": 4,
+          "stepNumber": "4",
           "action": "User confirms family member's information.",
           "notes": "The member is added to the family list.",
           "Field_type": "Button"
@@ -982,31 +982,31 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User clicks on 'View All Services'.",
           "notes": "Include all HMG services.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User clicks on 'Online Payment'.",
           "notes": "Include buttons 'Online Payment', 'Pending Payment' and 'Al Habib Wallet'.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.1,
+          "stepNumber": "2.1",
           "action": "User clicks on 'Online Payment'.",
           "notes": "Include dropdown 'Select Beneficiary' and 'Select Hospital', and four Textboxes 'File Number', 'Amount', 'Depositor Email' and 'Notes' and 'Submit' button.",
           "Field_type": "Dropdown, Textbox and Button"
         },
         {
-          "stepNumber": 2.2,
+          "stepNumber": "2.2",
           "action": "User clicks on 'Pending Payment'.",
           "notes": "Include 'Todo List'.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.3,
+          "stepNumber": "2.3",
           "action": "User clicks on 'Al Habib Wallet'.",
           "notes": "Include total balance and balance in each hospital and a 'Recharge Wallet' button.",
           "Field_type": "Button"
@@ -1041,19 +1041,19 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User clicks on 'View All Services'.",
           "notes": "Include all HMG services.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User clicks on 'My Child Vaccines'.",
           "notes": "Include signed email and 'View List of Children' button.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "User navigates through viewed children.",
           "notes": "Display children's vaccination records and schedules.",
           "Field_type": "Button"
@@ -1088,19 +1088,19 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User clicks on 'View All Services'.",
           "notes": "Include all HMG services.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User clicks on 'E-Referral Services'.",
           "notes": "Include Referral requester information.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.1,
+          "stepNumber": "2.1",
           "action": "User uses 'New Referral' tab.",
           "notes": "User can create a new referral request.",
           "Field_type": "Button"
@@ -1134,19 +1134,19 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User clicks on 'View All Services'.",
           "notes": "Include all HMG services.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User clicks on 'Water Consumption'.",
           "notes": "Displays water tracking interface.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "User adds amount of water consumed.",
           "notes": "Include tracked Water consumption that can be added by the user with 'Weekly', 'Monthly' and 'Yearly' tabs for easier tracking, and '600ML', '330ML' and '200ML' buttons, textbox 'amount' for custom amounts.",
           "Field_type": "Button and Textbox"
@@ -1177,61 +1177,61 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User clicks on 'View All Services'.",
           "notes": "Include all HMG services.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User clicks on 'Health Calculators'.",
           "notes": "Include 'General Health' tab that includes: 'BMI Calculators', 'Calories Calculators', 'BMR Calculators', 'Ideal Body Weight', 'Body Fat' and 'Carbohydrate Protein Fat', and 'Women Health' tab that includes: 'Ovulation Period' and 'Delivery Due date' buttons.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.1,
+          "stepNumber": "2.1",
           "action": "User clicks on 'BMI Calculators'.",
           "notes": "Include textbox 'height' and 'weight', each having a dropdown including units, and 'Calculate' button.",
           "Field_type": "Textbox and Button"
         },
         {
-          "stepNumber": 2.2,
+          "stepNumber": "2.2",
           "action": "User clicks on 'Calories Calculators'.",
           "notes": "Include two checkboxes 'female' and 'male', and textboxes 'The Age 11-120', 'height' and 'weight', and dropdowns two for units and the last 'Activity Level', and 'Calculate' button.",
           "Field_type": "Checkbox, Textbox, Dropdown and Button"
         },
         {
-          "stepNumber": 2.3,
+          "stepNumber": "2.3",
           "action": "User clicks on 'BMR Calculators'.",
           "notes": "Include two checkboxes 'female' and 'male', and textboxes 'The Age 11-120', 'height' and 'weight', and dropdowns two for units and the last 'Activity Level', and 'Calculate' button.",
           "Field_type": "Checkbox, Textbox, Dropdown and Button"
         },
         {
-          "stepNumber": 2.4,
+          "stepNumber": "2.4",
           "action": "User clicks on 'Ideal Body Weight'.",
           "notes": "Include two textboxes 'height' and 'weight', and dropdowns two for units and the last 'Body Frame Size'.",
           "Field_type": "Textbox and Dropdown"
         },
         {
-          "stepNumber": 2.5,
+          "stepNumber": "2.5",
           "action": "User clicks on 'Body Fat'.",
           "notes": "Include two Checkboxes 'Female' and 'Male', and four textboxes 'height', 'Neck', 'waist' and 'Hip', dropdowns four for units, and 'Calculate' button.",
           "Field_type": "Checkbox, Textbox, Dropdown and Button"
         },
         {
-          "stepNumber": 2.6,
+          "stepNumber": "2.6",
           "action": "User clicks on 'Carbohydrate Protein Fat'.",
           "notes": "Include textbox 'Calories Per Day' and dropdown 'Select Diet Type', and 'Calculate' button.",
           "Field_type": "Textbox, Dropdown and Button"
         },
         {
-          "stepNumber": 2.7,
+          "stepNumber": "2.7",
           "action": "User clicks on 'Ovulation Period'.",
           "notes": "Include a calendar to choose date, two textboxes 'Average Cycle Length' and 'Average Luteal Phase length', and 'Calculate' button.",
           "Field_type": "Textbox, Dropdown and Button"
         },
         {
-          "stepNumber": 2.8,
+          "stepNumber": "2.8",
           "action": "User clicks on 'Delivery Due date'.",
           "notes": "Include calendar dropdown, and 'Calculate' button.",
           "Field_type": "Dropdown and Button"
@@ -1264,31 +1264,31 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User clicks on 'View All Services'.",
           "notes": "Include all HMG services.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User clicks on 'Health Converters'.",
           "notes": "Include 'Blood Sugar', 'Blood Cholesterol' and 'Triglycerides Fat in Blood' buttons.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.1,
+          "stepNumber": "2.1",
           "action": "User clicks on 'Blood Sugar'.",
           "notes": "Include two unit converters 'MG/DLt to MMOL/L' and 'MMOL/L to MG/Dlt', and textbox 'Enter the reading value', and 'Calculate' button.",
           "Field_type": "Button and Textbox"
         },
         {
-          "stepNumber": 2.2,
+          "stepNumber": "2.2",
           "action": "User clicks on 'Blood Cholesterol'.",
           "notes": "Include two unit converters 'MG/DLt to MMOL/L' and 'MMOL/L to MG/Dlt', and textbox 'Enter the reading value', and 'Calculate' button.",
           "Field_type": "Button and Textbox"
         },
         {
-          "stepNumber": 2.3,
+          "stepNumber": "2.3",
           "action": "User clicks on 'Triglycerides Fat in Blood'.",
           "notes": "Include two unit converters 'MG/DLt to MMOL/L' and 'MMOL/L to MG/Dlt', and textbox 'Enter the reading value', and 'Calculate' button.",
           "Field_type": "Button and Textbox"
@@ -1322,19 +1322,19 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User clicks on 'View All Services'.",
           "notes": "Include all HMG services.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User clicks on 'Blood Donation'.",
           "notes": "Include dropdowns 'City', 'Gender' and 'Blood Type', include 'Book Appointment' and 'Save' buttons.",
           "Field_type": "Dropdown and Button"
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "User clicks on 'Book Appointment'.",
           "notes": "Include dropdowns 'Select Hospital' a calendar to choose a date and include 'Book Appointment' buttons.",
           "Field_type": "Dropdown and Button"
@@ -1368,13 +1368,13 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User clicks on 'View All Services'.",
           "notes": "Include all HMG services.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User clicks on 'Virtual Tour'.",
           "notes": "Redirect user to 'www.hmgwebservices.com', allows user to navigate the grounds of hospitals.",
           "Field_type": "Button"
@@ -1407,25 +1407,25 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User clicks on 'View All Services'.",
           "notes": "Include all HMG services.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User clicks on 'Car Parking Service'.",
           "notes": "Include explanation about the service and 'Read Barcode' button that opens the camera.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 3,
+          "stepNumber": "3",
           "action": "User scans the barcode.",
           "notes": "Car parking will be saved on the app.",
           "Field_type": "Camera Integration"
         },
         {
-          "stepNumber": 4,
+          "stepNumber": "4",
           "action": "User then clears data.",
           "notes": "By clicking on 'Clear My Data' it will delete saved parking spot and user can rescan QR code.",
           "Field_type": "Button and Camera Integration"
@@ -1460,13 +1460,13 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User clicks on 'View All Services'.",
           "notes": "Include all HMG services.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2,
+          "stepNumber": "2",
           "action": "User clicks on 'Latest News'.",
           "notes": "Takes user to 'HMG' account on 'X App'.",
           "Field_type": "Button"
@@ -1500,37 +1500,37 @@
       ],
       "steps": [
         {
-          "stepNumber": 1,
+          "stepNumber": "1",
           "action": "User navigates Home screen and clicks on 'Emergency Services'.",
           "notes": "Ensure the button can be seen immediately after opening the App.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.1,
+          "stepNumber": "2.1",
           "action": "User Chooses needed Service.",
           "notes": "Include Buttons 'Ambulance Request', 'Nearest ER Location', 'RRT Service' and 'ED Service'.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.1.1,
+          "stepNumber": "2.1.1",
           "action": "User clicks on 'Ambulance Request'.",
           "notes": "Include Transportation methods and Direction Checkboxes with a Bill amount, 'Back' and 'Next' Button.",
           "Field_type": "Checkbox and Button"
         },
         {
-          "stepNumber": 2.1.2,
+          "stepNumber": "2.1.2",
           "action": "User clicks on 'next'.",
           "notes": "Brings user to dropdown 'Pickup Location' and 'Dropoff Location'.",
           "Field_type": "Dropdown and Button"
         },
         {
-          "stepNumber": 2.1.3,
+          "stepNumber": "2.1.3",
           "action": "User clicks on 'next'.",
           "notes": "Brings user to Summary tab. Include all previous info and Contact RRT number, and 'Submit' button.",
           "Field_type": "Button"
         },
         {
-          "stepNumber": 2.1.4,
+          "stepNumber": "2.1.4",
           "action": "User clicks on 'Submit'.",
           "notes": "Request is submitted and confirmation is displayed to the user.",
           "Field_type": "Button"

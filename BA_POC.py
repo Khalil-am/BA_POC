@@ -27,8 +27,8 @@ class AppState:
 
 # Initialize Mistral client
 try:
-    MISTRAL_API_KEY = "ELnBuKbuQ3G5ckYf1tKHUkYor0Qb9jXx"  # REPLACE WITH YOUR ACTUAL KEY
-    # MISTRAL_API_KEY = st.secrets["MISTRAL_API_KEY"]
+    # MISTRAL_API_KEY = "ELnBuKbuQ3G5ckYf1tKHUkYor0Qb9jXx"  # REPLACE WITH YOUR ACTUAL KEY
+    MISTRAL_API_KEY = st.secrets["MISTRAL_API_KEY"]
     MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions"
     MISTRAL_MODEL = "ft:mistral-large-latest:4cfe9fde:20250312:69ed7ad7"  # Your fine-tuned model
 except KeyError:

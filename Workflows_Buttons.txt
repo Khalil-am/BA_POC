@@ -8,38 +8,73 @@
   "workflows": [
     {
       "id": "workflow_1",
-      "name": "Appointment Booking and Management",
+      "name": "Book Appointment",
       "description": "Workflow for booking, managing, and tracking appointments within the HMG app.",
       "actors": [
         "Patient",
-        "Business Analyst",
         "Appointment Scheduler",
         "Doctor"
       ],
       "steps": [
         {
           "stepNumber": 1,
-          "action": "Patient logs into the HMG app using National ID or Medical File Number.",
-          "notes": "Ensure authentication is secure and compliant with local regulations.",
-          "Field_type": "text box"
+          "action": "User in the home screen navigates to Book Appointment and clicks on it",
+          "notes": "User selects from HMG or HMC.",
+          "Field_type": "Dropdown"
         },
         {
-          "stepNumber": 2,
-          "action": "Patient selects 'Book Appointment' and chooses hospital, clinic, and doctor.",
-          "notes": "Use VIDA Appointments module to fetch available slots.",
-          "Field_type": ""
+          "stepNumber": 2.1,
+          "action": "User selects the hospital",
+          "notes": "User selects from HMG or HMC.",
+          "Field_type": "Dropdown"
+        },
+        {
+          "stepNumber": 2.2,
+          "action": "User navigates to the clinic tab and selects a clinic",
+          "notes": "User selects from a collection of clinics.",
+          "Field_type": "Dropdown"
+        },
+        {
+          "stepNumber": 2.3,
+          "action": "User navigates to Doctor Name and writes down the name of the doctor then clicks on search",
+          "notes": "It will show the doctor name and info if they are available.",
+          "Field_type": "Textbox"
         },
         {
           "stepNumber": 3,
-          "action": "Patient selects preferred appointment time and confirms booking.",
-          "notes": "Send confirmation via SMS and email.",
-          "Field_type": ""
+          "action": "User then selects the clinic.",
+          "notes": "It will show all the clinics that are available at that certain HMG or HMC.",
+          "Field_type": "Dropdown"
         },
         {
           "stepNumber": 4,
-          "action": "Appointment details are synced with the doctor's schedule and patient's medical file.",
-          "notes": "Ensure real-time updates to avoid double bookings.",
-          "Field_type": ""
+          "action": "User selects their Chief Complaint.",
+          "notes": "It will be whatever the user is complaining about to book the appointment."
+        },
+        {
+          "stepNumber": 5,
+          "action": "User selects from available doctors.",
+          "notes": "Under the selected branch, the user will see the available doctors."
+        },
+        {
+          "stepNumber": 6,
+          "action": "User then selects schedule.",
+          "notes": "The user selects a date that fits both the user and the doctor."
+        },
+        {
+          "stepNumber": 7,
+          "action": "User selects the appropriate date.",
+          "notes": "The dates are based on what's available in the doctor's schedule."
+        },
+        {
+          "stepNumber": 7.1,
+          "action": "If the user is logged in, it will schedule an appointment.",
+          "notes": "A pop-up will appear to confirm the schedule."
+        },
+        {
+          "stepNumber": 7.2,
+          "action": "If the user isn't logged in, they will need to login first then schedule.",
+          "notes": "A pop-up will appear to let the user login."
         }
       ],
       "expectedOutcome": "Successfully booked appointment with confirmation sent to the patient.",
@@ -52,7 +87,7 @@
         {
           "type": "module",
           "name": "VIDA Appointments Module",
-          "url": "https://vida.example.com/appointments"
+          "url": "Home screen => Book Appointment"
         }
       ],
       "businessRules": [
@@ -73,27 +108,54 @@
       "steps": [
         {
           "stepNumber": 1,
-          "action": "Service details are sent to the VIDA Billing module after appointment completion.",
-          "notes": "Ensure all services are accurately recorded.",
-          "Field_type": ""
+          "action": "After confirming the schedule, user can choose to set a reminder or not.",
+          "notes": "The user will set the reminder in their calendar.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 1.1,
+          "action": "In case user chooses no, it will take them to the payment page.",
+          "notes": "User will have multiple options of paying now or later, and updating the insurance.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 1.1.1,
+          "action": "In case user chooses pay now, they will go to another page with payment methods.",
+          "notes": "User can choose from multiple payment methods.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 1.1.1.1,
+          "action": "Confirm the payment method.",
+          "notes": "Money will be taken from the user's account and confirming the schedule.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 1.1.2,
+          "action": "In case user chooses pay later, they will be taken back to home screen.",
+          "notes": "A notification on My Appointments will appear confirming the schedule.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 1.2,
+          "action": "In case user chooses yes, it will take the user to the calendar app.",
+          "notes": "It will add the schedule time to the app.",
+          "Field_type": "Button"
         },
         {
           "stepNumber": 2,
           "action": "VIDA Billing module generates an invoice based on services rendered.",
-          "notes": "Include insurance details if applicable.",
-          "Field_type": ""
+          "notes": "Include insurance details if applicable."
         },
         {
           "stepNumber": 3,
           "action": "Invoice is sent to the patient via the HMG app and email.",
-          "notes": "Provide multiple payment options.",
-          "Field_type": ""
+          "notes": "Provide multiple payment options."
         },
         {
           "stepNumber": 4,
-          "action": "Patient makes payment through the app or at the hospital.",
-          "notes": "Ensure payment gateway is secure and compliant.",
-          "Field_type": ""
+          "action": "User makes payment through the app or at the hospital.",
+          "notes": "Ensure payment gateway is secure and compliant."
         }
       ],
       "expectedOutcome": "Accurate billing and successful payment processing.",
@@ -104,9 +166,9 @@
       ],
       "relatedArtifacts": [
         {
-          "type": "module",
+          "type": "VIDA Billing module",
           "name": "VIDA Billing Module",
-          "url": "https://vida.example.com/billing"
+          "url": "Home screen => Online Payment"
         }
       ],
       "businessRules": [
@@ -128,20 +190,17 @@
         {
           "stepNumber": 1,
           "action": "Patient calls the support number and is connected to a call center agent.",
-          "notes": "Use CS360 for call routing and tracking.",
-          "Field_type": ""
+          "notes": "Use CS360 for call routing and tracking."
         },
         {
           "stepNumber": 2,
           "action": "Call center agent logs the inquiry in CS360 and provides initial support.",
-          "notes": "Ensure all interactions are recorded for quality assurance.",
-          "Field_type": ""
+          "notes": "Ensure all interactions are recorded for quality assurance."
         },
         {
           "stepNumber": 3,
           "action": "If the issue is unresolved, escalate to technical support or relevant department.",
-          "notes": "Provide patient with a reference number for tracking.",
-          "Field_type": ""
+          "notes": "Provide patient with a reference number for tracking."
         }
       ],
       "expectedOutcome": "Patient inquiry is resolved or escalated appropriately.",
@@ -153,7 +212,7 @@
         {
           "type": "module",
           "name": "CS360 Call Center Module",
-          "url": "https://cs360.example.com"
+          "url": "Home screen => Connect With us"
         }
       ],
       "businessRules": [
@@ -175,20 +234,17 @@
         {
           "stepNumber": 1,
           "action": "Doctor orders a lab test through the HMG app.",
-          "notes": "Ensure the order is sent to the VIDA Lab module.",
-          "Field_type": ""
+          "notes": "Ensure the order is sent to the VIDA Lab module."
         },
         {
           "stepNumber": 2,
           "action": "Lab technician processes the test and uploads results to the VIDA Lab module.",
-          "notes": "Ensure results are accurate and timely.",
-          "Field_type": ""
+          "notes": "Ensure results are accurate and timely."
         },
         {
           "stepNumber": 3,
           "action": "Results are reviewed by the doctor and shared with the patient via the app.",
-          "notes": "Provide a summary and next steps if necessary.",
-          "Field_type": ""
+          "notes": "Provide a summary and next steps if necessary."
         }
       ],
       "expectedOutcome": "Accurate lab test results delivered to the patient and doctor.",
@@ -200,7 +256,7 @@
         {
           "type": "module",
           "name": "VIDA Lab Module",
-          "url": "https://vida.example.com/lab"
+          "url": "Home screen => Medical File => Lab Results"
         }
       ],
       "businessRules": [
@@ -221,27 +277,26 @@
       "steps": [
         {
           "stepNumber": 1,
-          "action": "Patient selects 'Emergency Check-In' in the HMG app.",
+          "action": "User selects 'Emergency Check-In' in the HMG app then selects book appointment.",
           "notes": "Ensure the option is easily accessible from the main menu.",
-          "Field_type": ""
+          "Field_type": "Button"
         },
         {
           "stepNumber": 2,
-          "action": "Patient fills out necessary forms and shares insurance details.",
-          "notes": "Use NFC technology for quick data transfer if available.",
-          "Field_type": ""
+          "action": "User fills out necessary forms and clicks book appointment.",
+          "notes": "Hospital name and clinic name.",
+          "Field_type": "Dropdown and Button"
         },
         {
           "stepNumber": 3,
-          "action": "Patient holds phone near the NFC sign to complete check-in.",
-          "notes": "Ensure clear instructions are provided for NFC usage.",
-          "Field_type": ""
+          "action": "User visit details with pay now button.",
+          "notes": "User information, ER visit details and payment details are shown.",
+          "Field_type": "Button"
         },
         {
           "stepNumber": 4,
-          "action": "Patient waits in the designated area until called by a nurse.",
-          "notes": "Provide real-time updates on wait times via the app.",
-          "Field_type": ""
+          "action": "User clicks pay now then confirm.",
+          "notes": "Different payment methods are shown."
         }
       ],
       "expectedOutcome": "Patient is successfully checked-in and ready for emergency services.",
@@ -253,7 +308,7 @@
         {
           "type": "technology",
           "name": "NFC Technology",
-          "url": "https://nfc.example.com"
+          "url": "Home screen => Emergency Check-in"
         }
       ],
       "businessRules": [
@@ -275,26 +330,22 @@
         {
           "stepNumber": 1,
           "action": "Doctor prescribes medication through the HMG app.",
-          "notes": "Ensure the prescription is sent to the patient's medical file.",
-          "Field_type": ""
+          "notes": "Ensure the prescription is sent to the patient's medical file."
         },
         {
           "stepNumber": 2,
-          "action": "Patient receives notification of the new prescription.",
-          "notes": "Include details on how to fill the prescription.",
-          "Field_type": ""
+          "action": "User receives notification of the new prescription.",
+          "notes": "Include details on how to fill the prescription."
         },
         {
           "stepNumber": 3,
-          "action": "Patient selects a pharmacy and submits the prescription.",
-          "notes": "Provide options for home delivery if available.",
-          "Field_type": ""
+          "action": "User selects a pharmacy and submits the prescription.",
+          "notes": "Provide options for home delivery if available."
         },
         {
           "stepNumber": 4,
-          "action": "Pharmacist processes the prescription and notifies the patient.",
-          "notes": "Ensure the patient is informed of any delays.",
-          "Field_type": ""
+          "action": "Pharmacist processes the prescription and notifies the User.",
+          "notes": "Ensure the patient is informed of any delays."
         }
       ],
       "expectedOutcome": "Patient receives prescribed medication in a timely manner.",
@@ -306,7 +357,7 @@
         {
           "type": "system",
           "name": "Pharmacy System",
-          "url": "https://pharmacy.example.com"
+          "url": "Home screen => Medical File => Medicines Prescriptions"
         }
       ],
       "businessRules": [
@@ -327,27 +378,28 @@
       "steps": [
         {
           "stepNumber": 1,
-          "action": "Patient selects 'Feedback' or 'Complaint' in the HMG app.",
-          "notes": "Ensure the option is easily accessible from the main menu.",
-          "Field_type": ""
+          "action": "User selects 'Connect with us' in the HMG app.",
+          "notes": "Ensure the option is easily accessible from the main menu."
         },
         {
           "stepNumber": 2,
-          "action": "Patient fills out the feedback or complaint form.",
-          "notes": "Include options for attaching documents or screenshots.",
-          "Field_type": ""
+          "action": "User selects 'Feedback'.",
+          "notes": "Ensure that the user can see it very easily."
         },
         {
           "stepNumber": 3,
-          "action": "Form is submitted to the customer service team for review.",
-          "notes": "Ensure all submissions are logged and tracked.",
-          "Field_type": ""
+          "action": "User fills out the feedback or complaint form.",
+          "notes": "Include options for attaching documents or screenshots."
         },
         {
           "stepNumber": 4,
+          "action": "Form is submitted to the customer service team for review.",
+          "notes": "Ensure all submissions are logged and tracked."
+        },
+        {
+          "stepNumber": 5,
           "action": "Customer service responds to the patient within the specified timeframe.",
-          "notes": "Provide updates on the status of the complaint if necessary.",
-          "Field_type": ""
+          "notes": "Provide updates on the status of the complaint if necessary."
         }
       ],
       "expectedOutcome": "Patient feedback or complaint is acknowledged and addressed.",
@@ -359,7 +411,7 @@
         {
           "type": "system",
           "name": "Customer Service System",
-          "url": "https://customerservice.example.com"
+          "url": "Home Screen ==> Connect with us ==> Feedback."
         }
       ],
       "businessRules": [
@@ -380,33 +432,28 @@
       "steps": [
         {
           "stepNumber": 1,
-          "action": "Patient selects 'COVID-19 Testing' in the HMG app.",
-          "notes": "Ensure the option is easily accessible from the main menu.",
-          "Field_type": ""
+          "action": "User selects 'COVID-19 Testing' in the HMG app.",
+          "notes": "Ensure the option is easily accessible from the main menu."
         },
         {
           "stepNumber": 2,
-          "action": "Patient answers a series of health-related questions.",
-          "notes": "Use the responses to determine the urgency of the test.",
-          "Field_type": ""
+          "action": "User answers a series of health-related questions.",
+          "notes": "Use the responses to determine the urgency of the test."
         },
         {
           "stepNumber": 3,
-          "action": "Patient books an appointment for the test at a selected location.",
-          "notes": "Provide real-time availability for test slots.",
-          "Field_type": ""
+          "action": "User books an appointment for the test at a selected location.",
+          "notes": "Provide real-time availability for test slots."
         },
         {
           "stepNumber": 4,
           "action": "Lab technician conducts the test and uploads results to the VIDA Lab module.",
-          "notes": "Ensure results are processed within the promised timeframe.",
-          "Field_type": ""
+          "notes": "Ensure results are processed within the promised timeframe."
         },
         {
           "stepNumber": 5,
-          "action": "Patient receives results via the HMG app and email.",
-          "notes": "Include instructions for next steps based on the results.",
-          "Field_type": ""
+          "action": "User receives results via the HMG app and email.",
+          "notes": "Include instructions for next steps based on the results."
         }
       ],
       "expectedOutcome": "Patient receives COVID-19 test results in a timely manner.",
@@ -418,7 +465,7 @@
         {
           "type": "module",
           "name": "VIDA Lab Module",
-          "url": "https://vida.example.com/lab"
+          "url": "Home screen ==> COVID-19 test"
         }
       ],
       "businessRules": [
@@ -439,27 +486,23 @@
       "steps": [
         {
           "stepNumber": 1,
-          "action": "Patient selects 'Home Health Care' in the HMG app.",
-          "notes": "Ensure the option is easily accessible from the main menu.",
-          "Field_type": ""
+          "action": "User selects 'Home Health Care' in the HMG app.",
+          "notes": "Ensure the option is easily accessible from the main menu."
         },
         {
           "stepNumber": 2,
-          "action": "Patient selects the type of service needed (e.g., physiotherapy, nursing).",
-          "notes": "Provide detailed descriptions of each service.",
-          "Field_type": ""
+          "action": "User selects the type of service needed (e.g., physiotherapy, nursing).",
+          "notes": "Provide detailed descriptions of each service."
         },
         {
           "stepNumber": 3,
-          "action": "Patient schedules the service and provides necessary details.",
-          "notes": "Include options for recurring services if applicable.",
-          "Field_type": ""
+          "action": "User schedules the service and provides necessary details.",
+          "notes": "Include options for recurring services if applicable."
         },
         {
           "stepNumber": 4,
-          "action": "Home health care provider confirms the appointment and visits the patient.",
-          "notes": "Ensure the patient is notified of the provider's ETA.",
-          "Field_type": ""
+          "action": "Home health care provider confirms the appointment and visits the User.",
+          "notes": "Ensure the patient is notified of the provider's ETA."
         }
       ],
       "expectedOutcome": "Patient receives the requested home health care services.",
@@ -471,7 +514,7 @@
         {
           "type": "system",
           "name": "Home Health Care Provider System",
-          "url": "https://homehealthcare.example.com"
+          "url": "Home screen => Home Health Care"
         }
       ],
       "businessRules": [
@@ -492,27 +535,162 @@
       "steps": [
         {
           "stepNumber": 1,
-          "action": "Patient accesses their medical file through the HMG app.",
-          "notes": "Ensure the file is secure and only accessible to authorized users.",
-          "Field_type": ""
+          "action": "User accesses their medical file through the HMG app.",
+          "notes": "Ensure the file is secure and only accessible to authorized users."
         },
         {
           "stepNumber": 2,
-          "action": "Patient updates personal information or adds new health data.",
-          "notes": "Include options for uploading documents or test results.",
-          "Field_type": ""
+          "action": "User updates personal information or adds new health data.",
+          "notes": "Include options for uploading documents or test results."
+        },
+        {
+          "stepNumber": 2.1,
+          "action": "User can access scheduled appointments by clicking 'My Appointments'.",
+          "notes": "Include a number showing scheduled appointments."
+        },
+        {
+          "stepNumber": 2.2,
+          "action": "User can access previous results through 'Lab Results' and 'Radiology Results'.",
+          "notes": "Include all the results with their related information."
+        },
+        {
+          "stepNumber": 2.3,
+          "action": "User can access medicines info through 'Medicines Prescriptions' and 'Active Medications'.",
+          "notes": "Include order log and the hospital/clinic that assigned it."
+        },
+        {
+          "stepNumber": 2.4,
+          "action": "User clicks 'Vital Signs Reports'.",
+          "notes": "Include all previous results and current signs reports."
+        },
+        {
+          "stepNumber": 2.5,
+          "action": "User clicks 'My Doctor List'.",
+          "notes": "Shows the current doctor assigned to the user."
+        },
+        {
+          "stepNumber": 2.6,
+          "action": "User clicks 'My Invoice List'.",
+          "notes": "Include invoice about all scheduled appointments."
+        },
+        {
+          "stepNumber": 2.7,
+          "action": "User clicks 'Ancillary Orders List'.",
+          "notes": "Include all ancillary orders and their status."
+        },
+        {
+          "stepNumber": 2.8,
+          "action": "User clicks 'We Care Service'.",
+          "notes": "Provides access to additional care services."
+        },
+        {
+          "stepNumber": 2.9,
+          "action": "User can access eye tests from 'Eye Measurement'.",
+          "notes": "Include all records for previous and current eye tests."
+        },
+        {
+          "stepNumber": 2.10,
+          "action": "User can access insurance info from 'Insurance Card', 'Update Insurance' and 'Insurance Approvals'.",
+          "notes": "Include insurance details and approval status."
+        },
+        {
+          "stepNumber": 2.11,
+          "action": "User clicks 'Allergies List'.",
+          "notes": "Include recorded allergies for the user."
+        },
+        {
+          "stepNumber": 2.12,
+          "action": "User clicks 'My Vaccines List'.",
+          "notes": "Shows recorded vaccines taken by the user."
+        },
+        {
+          "stepNumber": 2.13,
+          "action": "User clicks 'Medical Report'.",
+          "notes": "Include 'Requested', 'Ready' and 'Cancelled' medical reports and user can request a medical report."
+        },
+        {
+          "stepNumber": 2.14,
+          "action": "User clicks 'Monthly Reports'.",
+          "notes": "Shows medical reports from every month."
+        },
+        {
+          "stepNumber": 2.15,
+          "action": "User clicks 'Sick Leaves'.",
+          "notes": "Shows the dates the user took days off."
+        },
+        {
+          "stepNumber": 2.16,
+          "action": "User click 'My Balance Credit'.",
+          "notes": "Shows deposited money in certain hospital wallets with a total balance and a 'Recharge Wallet' button.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.17,
+          "action": "User click on 'My Trackers Service'.",
+          "notes": "Include 'Blood Sugar', 'Blood Pressure' and 'Weight' buttons.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.17.1,
+          "action": "User clicks 'Blood Sugar'.",
+          "notes": "Shows tracked blood sugar levels that can be added by the user with 'Weekly', 'Monthly' and 'Yearly' tabs for easier tracking."
+        },
+        {
+          "stepNumber": 2.17.2,
+          "action": "User clicks 'Blood Pressure'.",
+          "notes": "Shows tracked blood pressure that can be added by the user with 'Weekly', 'Monthly' and 'Yearly' tabs for easier tracking."
+        },
+        {
+          "stepNumber": 2.17.3,
+          "action": "User clicks 'Weight'.",
+          "notes": "Shows tracked Weight that can be added by the user with 'Weekly', 'Monthly' and 'Yearly' tabs for easier tracking.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.18,
+          "action": "User click on 'Pairing Smart Watches'.",
+          "notes": "Include supported smart watches with detailed instructions on how to pair it.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.18.1,
+          "action": "User click continue to sync health data from the watch to the app.",
+          "notes": "Include 'Heart Rate', 'Steps' and 'Distance'.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.18.2,
+          "action": "After syncing the data, user can check each of 'Heart Rate', 'Steps' and 'Distance'.",
+          "notes": "Include options to manually add information with a 'Weekly', 'Monthly' and 'Yearly' graph tab to each one.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.19,
+          "action": "User click on 'Ask Your Doctor'.",
+          "notes": "Include two tabs 'Ask Doctor' and 'Doctor Responses', only available for doctors visited in the past 15 days.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.20,
+          "action": "User click on 'Internet Pairing'.",
+          "notes": "Pop up will appear allowing the app to connect.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.21,
+          "action": "User click on 'Chatbot'.",
+          "notes": "A bot that is trained for medical quick responses.",
+          "Field_type": "Button"
         },
         {
           "stepNumber": 3,
           "action": "Doctor reviews and approves updates to the medical file.",
-          "notes": "Ensure all updates are logged for audit purposes.",
-          "Field_type": ""
+          "notes": "Ensure all updates are logged for audit purposes."
         },
         {
           "stepNumber": 4,
           "action": "Medical records department archives the updated file.",
-          "notes": "Ensure the file is backed up and secure.",
-          "Field_type": ""
+          "notes": "Ensure the file is backed up and secure."
         }
       ],
       "expectedOutcome": "Patient medical file is accurately updated and secure.",
@@ -524,13 +702,857 @@
         {
           "type": "system",
           "name": "Medical Records System",
-          "url": "https://medicalrecords.example.com"
+          "url": "Home screen => Medical File"
         }
       ],
       "businessRules": [
         "Medical files must be updated within 1 hour of receiving new data.",
         "Patients must be notified of any changes to their medical file.",
         "All updates must be reviewed and approved by a doctor within 24 hours."
+      ]
+    },
+    {
+      "id": "workflow_11",
+      "name": "Ordering Medicines Online",
+      "description": "Workflow for Using the App 'Al Habib Pharmacy' to prompt you to download the app and use the Epharmacy application.",
+      "actors": [
+        "Patient",
+        "Pharmacist",
+        "Online Pharmacy store"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User Clicks on 'Online Pharmacy'.",
+          "notes": "After clicking the button it takes the user to a link to download the App 'Al Habib Pharmacy'.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User downloads the App.",
+          "notes": "The user will be able to order the prescribed medicine using the App."
+        }
+      ],
+      "expectedOutcome": "Patient medicine is easily more obtainable.",
+      "dependencies": [
+        "IOS App Store",
+        "Al Habib Pharmacy App"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "system",
+          "name": "Medical Records System",
+          "url": "Home screen => Online Pharmacy Ecommerce Solution"
+        }
+      ],
+      "businessRules": [
+        "Based on the application on the IOS, the system will direct you to the store to download the App."
+      ]
+    },
+    {
+      "id": "workflow_12",
+      "name": "Live Care",
+      "description": "Workflow for Online Live Care, Patient and Doctor can prescribe from home.",
+      "actors": [
+        "Patient",
+        "Doctor"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User Clicks on 'Live Care Online Consulting'.",
+          "notes": "Included buttons 'Get consultation immediately', 'Schedule video call' and 'Pharma LiveCare'.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.1,
+          "action": "User Clicks on 'Get consultation immediately'.",
+          "notes": "Include Consultation based on the specialty the User needs and 'Logs' tab for past consultations."
+        },
+        {
+          "stepNumber": 2.1.1,
+          "action": "User chooses the specialty they need.",
+          "notes": "Included buttons 'Video Call', 'Audio call' and 'Phone Call',
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.1.2,
+          "action": "User chooses any of the options.",
+          "notes": "User will be taken to a payment Tab, Include Consultation Fee and 'Cancel' and 'Next' buttons.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.2,
+          "action": "User Clicks on 'Schedule video call'.",
+          "notes": "Include Consultation based on the specialty the User needs and 'Logs' tab for past consultations."
+        },
+        {
+          "stepNumber": 2.2.1,
+          "action": "User chooses the specialty they need.",
+          "notes": "Include Dropdowns for HMCs the service covers.",
+          "Field_type": "dropdown"
+        },
+        {
+          "stepNumber": 2.2.2,
+          "action": "User chooses the doctor from HMCs.",
+          "notes": "Include Information about the selected Doctor with a schedule button and 'Available Appointments' tab.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.3,
+          "action": "User clicks on 'Pharma LiveCare'.",
+          "notes": "Include instructions on how to use it with a 'Scan QR Code' button.",
+          "Field_type": "Button"
+        }
+      ],
+      "expectedOutcome": "Consultation is easier and faster for both doctor and User.",
+      "dependencies": [
+        "Synapsis System"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "system",
+          "name": "Live Care",
+          "url": "HomeScreen => Live Care Online Consulting"
+        }
+      ],
+      "businessRules": [
+        "Appointments can only be booked up to 30 days in advance.",
+        "Patients must confirm their identity using National ID or Medical File Number.",
+        "Cancellations must be made at least 24 hours before the appointment."
+      ]
+    },
+    {
+      "id": "workflow_13",
+      "name": "Hospital Navigation",
+      "description": "Workflow for navigating the grounds of the hospital.",
+      "actors": [
+        "Patient",
+        "Mobile App",
+        "Navigation hardware"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User Clicks on 'Hospital Navigation'.",
+          "notes": "Included Dropdown for HMCs and HMGs the service covers.",
+          "Field_type": "dropdown and Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User selects the HMC or HMG they want.",
+          "notes": "Included 'Confirms' button then it shows a map with a route from the User's location.",
+          "Field_type": "Button"
+        }
+      ],
+      "expectedOutcome": "User can easily navigate in hospital ground.",
+      "dependencies": [
+        "HMG Mobile App",
+        "GPS feature",
+        "Active WIFI Network",
+        "Navigation hardware"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "Navigation System",
+          "name": "Hospital Navigation",
+          "url": "HomeScreen => Hospital Navigation"
+        }
+      ],
+      "businessRules": [
+        "This feature only works for covered areas.",
+        "It cannot track patient outside the device range.",
+        "This is available for selected Hospitals."
+      ]
+    },
+    {
+      "id": "workflow_14",
+      "name": "Comprehensive Medical Checkup",
+      "description": "Workflow for Comprehensive Medical Checkup.",
+      "actors": [
+        "Patient",
+        "HMG OR HMC"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User clicks on 'Checkup Comprehensive'.",
+          "notes": "Included checkup options 'Executive medical examination', 'Comprehensive medical examination', 'Preventive medical examination' and 'Pre marriage examination' and 'Order Log' tab.",
+          "Field_type": "Checkbox"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User chooses one of the options above.",
+          "notes": "Include dropdown of HMGs and HMCs the service covers with a 'confirm' button.",
+          "Field_type": "Dropdown and Button"
+        },
+        {
+          "stepNumber": 3,
+          "action": "User confirms the schedule.",
+          "notes": "Pop up appears confirming the schedule with a 'Request Id'."
+        }
+      ],
+      "expectedOutcome": "Makes tracking medical results more detailed, easier to access and integrated with VIDA Lab.",
+      "dependencies": [
+        "VIDA lab module",
+        "VIDA Appointments Module"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "VIDA lab Module",
+          "name": "Comprehensive Medical Checkup",
+          "url": "HomeScreen => Checkup Comprehensive"
+        }
+      ],
+      "businessRules": [
+        "Appointments can only be booked up to 30 days in advance.",
+        "Patients must confirm their identity using National ID or Medical File Number.",
+        "Cancellations must be made at least 24 hours before the appointment."
+      ]
+    },
+    {
+      "id": "workflow_15",
+      "name": "Family Members Management",
+      "description": "Workflow for Family members management.",
+      "actors": [
+        "Patient"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User clicks on 'View All Services'.",
+          "notes": "Include all HMG services.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User clicks on 'My Family Files'.",
+          "notes": "Include 'My Family' tab that shows registered members and 'Request' tab that shows dropdowns 'User want to view your medical file', 'Sent requests' and 'User can view your medical file' and 'Add family member' button for both tabs.",
+          "Field_type": "Button and Dropdown"
+        },
+        {
+          "stepNumber": 3,
+          "action": "User clicks on 'Add family member'.",
+          "notes": "Include two buttons 'National ID Number' and 'Medical File Number' the user can choose from.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 3.1,
+          "action": "User clicks on 'National ID Number'.",
+          "notes": "Include dropdown 'Country', two textboxes 'Phone Number' and 'National ID Number' and 'Add' button.",
+          "Field_type": "Dropdown, TextBox and Button"
+        },
+        {
+          "stepNumber": 3.2,
+          "action": "User clicks on 'Medical File Number'.",
+          "notes": "Include dropdown 'Country', two textboxes 'Phone Number' and 'Medical File Number' and 'Add' button.",
+          "Field_type": "Dropdown, TextBox and Button"
+        },
+        {
+          "stepNumber": 4,
+          "action": "User confirms family member's information.",
+          "notes": "The member is added to the family list.",
+          "Field_type": "Button"
+        }
+      ],
+      "expectedOutcome": "Makes tracking Family members' medical results more accessible.",
+      "dependencies": [
+        "medical_records_system",
+        "VIDA registration Module"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "VIDA registration Module",
+          "name": "Family members management",
+          "url": "HomeScreen => View All Services => My Family Files"
+        }
+      ],
+      "businessRules": [
+        "Family member should be added using their National ID or Medical File Number."
+      ]
+    },
+    {
+      "id": "workflow_16",
+      "name": "Online Payment",
+      "description": "Workflow for Online payment methods.",
+      "actors": [
+        "Patient",
+        "Billing Department",
+        "Insurance Provider"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User clicks on 'View All Services'.",
+          "notes": "Include all HMG services.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User clicks on 'Online Payment'.",
+          "notes": "Include buttons 'Online Payment', 'Pending Payment' and 'Al Habib Wallet'.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.1,
+          "action": "User clicks on 'Online Payment'.",
+          "notes": "Include dropdown 'Select Beneficiary' and 'Select Hospital', and four Textboxes 'File Number', 'Amount', 'Depositor Email' and 'Notes' and 'Submit' button.",
+          "Field_type": "Dropdown, Textbox and Button"
+        },
+        {
+          "stepNumber": 2.2,
+          "action": "User clicks on 'Pending Payment'.",
+          "notes": "Include 'Todo List'.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.3,
+          "action": "User clicks on 'Al Habib Wallet'.",
+          "notes": "Include total balance and balance in each hospital and a 'Recharge Wallet' button.",
+          "Field_type": "Button"
+        }
+      ],
+      "expectedOutcome": "Makes tracking payments and balance more convenient.",
+      "dependencies": [
+        "VIDA Billing Module",
+        "Insurance Provider API",
+        "Payment Gateway"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "VIDA Billing Module",
+          "name": "Online Payment",
+          "url": "HomeScreen => Online Payment"
+        }
+      ],
+      "businessRules": [
+        "Appointments can only be booked up to 30 days in advance.",
+        "Patients must confirm their identity using National ID or Medical File Number.",
+        "Cancellations must be made at least 24 hours before the appointment."
+      ]
+    },
+    {
+      "id": "workflow_17",
+      "name": "Child Vaccines Management",
+      "description": "Workflow for Managing Child Vaccines.",
+      "actors": [
+        "Patient",
+        "Nurse"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User clicks on 'View All Services'.",
+          "notes": "Include all HMG services.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User clicks on 'My Child Vaccines'.",
+          "notes": "Include signed email and 'View List of Children' button.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 3,
+          "action": "User navigates through viewed children.",
+          "notes": "Display children's vaccination records and schedules.",
+          "Field_type": "Button"
+        }
+      ],
+      "expectedOutcome": "Vaccinating Children and Tracking Vaccines.",
+      "dependencies": [
+        "Patient",
+        "Hospital",
+        "Vaccination Records System"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "VIDA Billing Module",
+          "name": "Child Vaccines Management",
+          "url": "HomeScreen => View All Services => My Child Vaccines"
+        }
+      ],
+      "businessRules": [
+        "Appointments can only be booked up to 30 days in advance.",
+        "Patients must confirm their identity using National ID or Medical File Number.",
+        "Cancellations must be made at least 24 hours before the appointment."
+      ]
+    },
+    {
+      "id": "workflow_18",
+      "name": "E-Referral Service",
+      "description": "Workflow for E-Referral Service.",
+      "actors": [
+        "Patient",
+        "Doctor"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User clicks on 'View All Services'.",
+          "notes": "Include all HMG services.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User clicks on 'E-Referral Services'.",
+          "notes": "Include Referral requester information.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.1,
+          "action": "User uses 'New Referral' tab.",
+          "notes": "User can create a new referral request.",
+          "Field_type": "Button"
+        }
+      ],
+      "expectedOutcome": "Patient is referred to a different doctor.",
+      "dependencies": [
+        "Doctor Directory",
+        "Patient Records",
+        "Referral System"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "Module",
+          "name": "E-Referral Services",
+          "url": "HomeScreen => View All Services => E-Referral Services"
+        }
+      ],
+      "businessRules": [
+        "Appointments can only be booked up to 30 days in advance.",
+        "Patients must confirm their identity using National ID or Medical File Number.",
+        "Cancellations must be made at least 24 hours before the appointment."
+      ]
+    },
+    {
+      "id": "workflow_19",
+      "name": "Water Consumption",
+      "description": "Workflow for Water consumption.",
+      "actors": [
+        "Patient"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User clicks on 'View All Services'.",
+          "notes": "Include all HMG services.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User clicks on 'Water Consumption'.",
+          "notes": "Displays water tracking interface.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 3,
+          "action": "User adds amount of water consumed.",
+          "notes": "Include tracked Water consumption that can be added by the user with 'Weekly', 'Monthly' and 'Yearly' tabs for easier tracking, and '600ML', '330ML' and '200ML' buttons, textbox 'amount' for custom amounts.",
+          "Field_type": "Button and Textbox"
+        }
+      ],
+      "expectedOutcome": "Users can track their daily, weekly, monthly, and yearly water consumption to maintain hydration goals.",
+      "dependencies": [
+        "HMG App",
+        "medical_records_system"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "System",
+          "name": "Water Consumption",
+          "url": "HomeScreen => View All Services => Water Consumption"
+        }
+      ],
+      "businessRules": [
+        "The system must automatically save logged water consumption data and allow users to view historical data."
+      ]
+    },
+    {
+      "id": "workflow_20",
+      "name": "Health Calculators",
+      "description": "Workflow for Health Calculators.",
+      "actors": [
+        "Patient"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User clicks on 'View All Services'.",
+          "notes": "Include all HMG services.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User clicks on 'Health Calculators'.",
+          "notes": "Include 'General Health' tab that includes: 'BMI Calculators', 'Calories Calculators', 'BMR Calculators', 'Ideal Body Weight', 'Body Fat' and 'Carbohydrate Protein Fat', and 'Women Health' tab that includes: 'Ovulation Period' and 'Delivery Due date' buttons.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.1,
+          "action": "User clicks on 'BMI Calculators'.",
+          "notes": "Include textbox 'height' and 'weight', each having a dropdown including units, and 'Calculate' button.",
+          "Field_type": "Textbox and Button"
+        },
+        {
+          "stepNumber": 2.2,
+          "action": "User clicks on 'Calories Calculators'.",
+          "notes": "Include two checkboxes 'female' and 'male', and textboxes 'The Age 11-120', 'height' and 'weight', and dropdowns two for units and the last 'Activity Level', and 'Calculate' button.",
+          "Field_type": "Checkbox, Textbox, Dropdown and Button"
+        },
+        {
+          "stepNumber": 2.3,
+          "action": "User clicks on 'BMR Calculators'.",
+          "notes": "Include two checkboxes 'female' and 'male', and textboxes 'The Age 11-120', 'height' and 'weight', and dropdowns two for units and the last 'Activity Level', and 'Calculate' button.",
+          "Field_type": "Checkbox, Textbox, Dropdown and Button"
+        },
+        {
+          "stepNumber": 2.4,
+          "action": "User clicks on 'Ideal Body Weight'.",
+          "notes": "Include two textboxes 'height' and 'weight', and dropdowns two for units and the last 'Body Frame Size'.",
+          "Field_type": "Textbox and Dropdown"
+        },
+        {
+          "stepNumber": 2.5,
+          "action": "User clicks on 'Body Fat'.",
+          "notes": "Include two Checkboxes 'Female' and 'Male', and four textboxes 'height', 'Neck', 'waist' and 'Hip', dropdowns four for units, and 'Calculate' button.",
+          "Field_type": "Checkbox, Textbox, Dropdown and Button"
+        },
+        {
+          "stepNumber": 2.6,
+          "action": "User clicks on 'Carbohydrate Protein Fat'.",
+          "notes": "Include textbox 'Calories Per Day' and dropdown 'Select Diet Type', and 'Calculate' button.",
+          "Field_type": "Textbox, Dropdown and Button"
+        },
+        {
+          "stepNumber": 2.7,
+          "action": "User clicks on 'Ovulation Period'.",
+          "notes": "Include a calendar to choose date, two textboxes 'Average Cycle Length' and 'Average Luteal Phase length', and 'Calculate' button.",
+          "Field_type": "Textbox, Dropdown and Button"
+        },
+        {
+          "stepNumber": 2.8,
+          "action": "User clicks on 'Delivery Due date'.",
+          "notes": "Include calendar dropdown, and 'Calculate' button.",
+          "Field_type": "Dropdown and Button"
+        }
+      ],
+      "expectedOutcome": "Users can calculate and track various health metrics (e.g., BMI, calories, BMR, ideal body weight, body fat, carbohydrate-protein-fat ratio, ovulation period, and delivery due date) for personal health monitoring and future reference.",
+      "dependencies": [
+        "Patient",
+        "Data Storage System",
+        "Health Calculation Algorithms"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "Module",
+          "name": "Health Calculators",
+          "url": "HomeScreen => View All Services => Health Calculators"
+        }
+      ],
+      "businessRules": [
+        "All input fields (e.g., height, weight, age) must be validated to ensure they contain numeric values within acceptable ranges.",
+        "All calculated results must be displayed clearly and include units (e.g., BMI in kg/m², calories in kcal/day)."
+      ]
+    },
+    {
+      "id": "workflow_21",
+      "name": "Health Converters",
+      "description": "Workflow for Health Converters.",
+      "actors": [
+        "Patient"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User clicks on 'View All Services'.",
+          "notes": "Include all HMG services.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User clicks on 'Health Converters'.",
+          "notes": "Include 'Blood Sugar', 'Blood Cholesterol' and 'Triglycerides Fat in Blood' buttons.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.1,
+          "action": "User clicks on 'Blood Sugar'.",
+          "notes": "Include two unit converters 'MG/DLt to MMOL/L' and 'MMOL/L to MG/Dlt', and textbox 'Enter the reading value', and 'Calculate' button.",
+          "Field_type": "Button and Textbox"
+        },
+        {
+          "stepNumber": 2.2,
+          "action": "User clicks on 'Blood Cholesterol'.",
+          "notes": "Include two unit converters 'MG/DLt to MMOL/L' and 'MMOL/L to MG/Dlt', and textbox 'Enter the reading value', and 'Calculate' button.",
+          "Field_type": "Button and Textbox"
+        },
+        {
+          "stepNumber": 2.3,
+          "action": "User clicks on 'Triglycerides Fat in Blood'.",
+          "notes": "Include two unit converters 'MG/DLt to MMOL/L' and 'MMOL/L to MG/Dlt', and textbox 'Enter the reading value', and 'Calculate' button.",
+          "Field_type": "Button and Textbox"
+        }
+      ],
+      "expectedOutcome": "Users can easily convert health measurements between different units for better understanding of their medical results.",
+      "dependencies": [
+        "Patient",
+        "Conversion Algorithms"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "Module",
+          "name": "Health Converters",
+          "url": "HomeScreen => View All Services => Health Converters"
+        }
+      ],
+      "businessRules": [
+        "All conversions must be mathematically accurate and follow recognized medical conversion standards.",
+        "The system must validate input values to ensure they are within realistic ranges for each measurement type."
+      ]
+    },
+    {
+      "id": "workflow_22",
+      "name": "Blood Donation",
+      "description": "Workflow for Blood Donation.",
+      "actors": [
+        "Patient",
+        "Appointment Scheduler",
+        "Nurse"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User clicks on 'View All Services'.",
+          "notes": "Include all HMG services.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User clicks on 'Blood Donation'.",
+          "notes": "Include dropdowns 'City', 'Gender' and 'Blood Type', include 'Book Appointment' and 'Save' buttons.",
+          "Field_type": "Dropdown and Button"
+        },
+        {
+          "stepNumber": 3,
+          "action": "User clicks on 'Book Appointment'.",
+          "notes": "Include dropdowns 'Select Hospital' a calendar to choose a date and include 'Book Appointment' buttons.",
+          "Field_type": "Dropdown and Button"
+        }
+      ],
+      "expectedOutcome": "User uses the App to book an appointment to donate Blood.",
+      "dependencies": [
+        "VIDA Appointments Module",
+        "Patient Medical File",
+        "Hospital's Schedule"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "Module",
+          "name": "Blood Donation",
+          "url": "HomeScreen => View All Services => Blood Donation"
+        }
+      ],
+      "businessRules": [
+        "Appointments can only be booked up to 30 days in advance.",
+        "Patients must confirm their identity using National ID or Medical File Number.",
+        "Cancellations must be made at least 24 hours before the appointment."
+      ]
+    },
+    {
+      "id": "workflow_23",
+      "name": "Virtual Tour",
+      "description": "Workflow for Virtual Tour.",
+      "actors": [
+        "Patient"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User clicks on 'View All Services'.",
+          "notes": "Include all HMG services.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User clicks on 'Virtual Tour'.",
+          "notes": "Redirect user to 'www.hmgwebservices.com', allows user to navigate the grounds of hospitals.",
+          "Field_type": "Button"
+        }
+      ],
+      "expectedOutcome": "Users can explore hospital facilities and services through an interactive virtual tour, enhancing their understanding of available resources.",
+      "dependencies": [
+        "HMG Mobile App",
+        "GPS feature",
+        "Active WIFI Network",
+        "Navigation hardware"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "Navigation System",
+          "name": "Virtual Tour",
+          "url": "HomeScreen => View All Services => Virtual Tour"
+        }
+      ],
+      "businessRules": [
+        "The map interface must be interactive, allowing users to zoom in/out and navigate between different hospital areas."
+      ]
+    },
+    {
+      "id": "workflow_24",
+      "name": "Car Parking Service",
+      "description": "Workflow for Car parking management.",
+      "actors": [
+        "Patient"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User clicks on 'View All Services'.",
+          "notes": "Include all HMG services.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User clicks on 'Car Parking Service'.",
+          "notes": "Include explanation about the service and 'Read Barcode' button that opens the camera.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 3,
+          "action": "User scans the barcode.",
+          "notes": "Car parking will be saved on the app.",
+          "Field_type": "Camera Integration"
+        },
+        {
+          "stepNumber": 4,
+          "action": "User then clears data.",
+          "notes": "By clicking on 'Clear My Data' it will delete saved parking spot and user can rescan QR code.",
+          "Field_type": "Button and Camera Integration"
+        }
+      ],
+      "expectedOutcome": "Users can easily locate and manage their car using barcode scanning, ensuring a seamless parking experience at the hospital.",
+      "dependencies": [
+        "HMG Mobile App",
+        "GPS feature",
+        "Camera App Integration",
+        "Navigation hardware"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "Module",
+          "name": "Car Parking Service",
+          "url": "HomeScreen => View All Services => Car Parking Service"
+        }
+      ],
+      "businessRules": [
+        "The barcode must be unique for each parking spot and validated in real-time.",
+        "The camera app must support barcode scanning and integrate seamlessly with the parking management system."
+      ]
+    },
+    {
+      "id": "workflow_25",
+      "name": "Latest News",
+      "description": "Workflow for HMG news.",
+      "actors": [
+        "Patient",
+        "Marketing team"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User clicks on 'View All Services'.",
+          "notes": "Include all HMG services.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2,
+          "action": "User clicks on 'Latest News'.",
+          "notes": "Takes user to 'HMG' account on 'X App'.",
+          "Field_type": "Button"
+        }
+      ],
+      "expectedOutcome": "Users can access the latest news and updates about the hospital services, events, and health information.",
+      "dependencies": [
+        "HMG Social Media Integration",
+        "Marketing Content Management System"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "Module",
+          "name": "Latest News",
+          "url": "HomeScreen => View All Services => Latest News"
+        }
+      ],
+      "businessRules": [
+        "News content must be reviewed and approved by the marketing department before publication.",
+        "Content must be regularly updated to ensure relevance and accuracy."
+      ]
+    },
+    {
+      "id": "workflow_26",
+      "name": "Emergency Services",
+      "description": "Workflow for Emergency Services.",
+      "actors": [
+        "Patient",
+        "ER Team",
+        "Ambulance Team"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "User navigates Home screen and clicks on 'Emergency Services'.",
+          "notes": "Ensure the button can be seen immediately after opening the App.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.1,
+          "action": "User Chooses needed Service.",
+          "notes": "Include Buttons 'Ambulance Request', 'Nearest ER Location', 'RRT Service' and 'ED Service'.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.1.1,
+          "action": "User clicks on 'Ambulance Request'.",
+          "notes": "Include Transportation methods and Direction Checkboxes with a Bill amount, 'Back' and 'Next' Button.",
+          "Field_type": "Checkbox and Button"
+        },
+        {
+          "stepNumber": 2.1.2,
+          "action": "User clicks on 'next'.",
+          "notes": "Brings user to dropdown 'Pickup Location' and 'Dropoff Location'.",
+          "Field_type": "Dropdown and Button"
+        },
+        {
+          "stepNumber": 2.1.3,
+          "action": "User clicks on 'next'.",
+          "notes": "Brings user to Summary tab. Include all previous info and Contact RRT number, and 'Submit' button.",
+          "Field_type": "Button"
+        },
+        {
+          "stepNumber": 2.1.4,
+          "action": "User clicks on 'Submit'.",
+          "notes": "Request is submitted and confirmation is displayed to the user.",
+          "Field_type": "Button"
+        }
+      ],
+      "expectedOutcome": "Patient receives prompt emergency assistance through the requested service.",
+      "dependencies": [
+        "Emergency Response System",
+        "GPS Services",
+        "Communication System"
+      ],
+      "relatedArtifacts": [
+        {
+          "type": "Module",
+          "name": "Emergency Services",
+          "url": "HomeScreen => Emergency Services"
+        }
+      ],
+      "businessRules": [
+        "Emergency requests must be prioritized and processed within 60 seconds.",
+        "Location data must be verified for accuracy before dispatching services.",
+        "Users must be provided with real-time updates on the status of their emergency request."
       ]
     }
   ],
